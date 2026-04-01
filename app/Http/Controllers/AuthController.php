@@ -18,18 +18,17 @@ class AuthController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:6|confirmed',
         ]);
 
-        // Password is hashed before saving for security.
-        $user = User::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'password' => Hash::make($validated['password']),
-            // New users are always buyers.
-            'role' => 'buyer',
-        ]);
+        // Buyers register and enter by their name only.
+        // We reuse their account if they use the exact same name, or create a new one.
+        $user = User::firstOrCreate(
+            ['name' => $validated['name'], 'role' => 'buyer'],
+            [
+                'email' => \Illuminate\Support\Str::slug($validated['name']) . '_' . uniqid() . '@buyer.local',
+                'password' => Hash::make(\Illuminate\Support\Str::random(16)),
+            ]
+        );
 
         Auth::login($user);
 

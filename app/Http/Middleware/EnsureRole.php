@@ -13,12 +13,12 @@ class EnsureRole
      * This middleware keeps access simple by allowing only users with
      * the requested role (buyer or seller).
      */
-    public function handle(Request $request, Closure $next, string $role)
+    public function handle(Request $request, Closure $next, ...$roles)
     {
         $user = $request->user();
 
-        if (!$user || $user->role !== $role) {
-            abort(403, 'You are not allowed to access this page.');
+        if (!$user || !in_array($user->role, $roles)) {
+            abort(403, 'YOU ARE NOT ALLOWED TO ACCESS THIS PAGE.');
         }
 
         return $next($request);
