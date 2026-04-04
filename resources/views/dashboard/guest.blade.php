@@ -37,40 +37,6 @@
     </div>
 </div>
 
-<!-- Features Section -->
-<div class="mb-16">
-    <h2 class="text-3xl font-bold text-center mb-10 text-gray-800 dark:text-slate-100">Why Choose FreshMart?</h2>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-        <div class="p-6 bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-100 dark:border-slate-700 hover:shadow-md transition">
-            <div class="w-16 h-16 mx-auto bg-green-100 dark:bg-green-500/15 text-green-500 dark:text-green-300 rounded-full flex items-center justify-center mb-4">
-                <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-            </div>
-            <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-slate-100">Fast Delivery</h3>
-            <p class="text-gray-600 dark:text-slate-300">Get your daily staples and fresh food delivered to your doorstep within hours.</p>
-        </div>
-        <div class="p-6 bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-100 dark:border-slate-700 hover:shadow-md transition">
-            <div class="w-16 h-16 mx-auto bg-green-100 dark:bg-green-500/15 text-green-500 dark:text-green-300 rounded-full flex items-center justify-center mb-4">
-                <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
-                </svg>
-            </div>
-            <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-slate-100">Farm Fresh</h3>
-            <p class="text-gray-600 dark:text-slate-300">We source locally from verified farmers to ensure the highest quality produce.</p>
-        </div>
-        <div class="p-6 bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-100 dark:border-slate-700 hover:shadow-md transition">
-            <div class="w-16 h-16 mx-auto bg-green-100 dark:bg-green-500/15 text-green-500 dark:text-green-300 rounded-full flex items-center justify-center mb-4">
-                <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                </svg>
-            </div>
-            <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-slate-100">Secure Payments</h3>
-            <p class="text-gray-600 dark:text-slate-300">Your payments are highly secure with multiple hassle-free checkout options.</p>
-        </div>
-    </div>
-</div>
-
 <!-- Featured Products Section -->
 <div class="mb-12">
     <div class="flex justify-between items-center mb-8">
@@ -107,6 +73,56 @@
                 <p class="text-gray-500 dark:text-slate-300">Products are currently being restocked. Check back soon!</p>
             </div>
         @endforelse
+    </div>
+</div>
+
+<!-- Store Location -->
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-gray-100 dark:border-slate-700 p-8 mb-12">
+    <h2 class="text-2xl font-bold text-gray-800 dark:text-slate-100 mb-2">Visit Our Grocery</h2>
+    <p class="text-gray-600 dark:text-slate-300 mb-5">Father Saturnino Urios University, San Francisco St, Butuan City, 8600 Agusan del Norte</p>
+    <div class="overflow-hidden rounded-lg border border-gray-200 dark:border-slate-700">
+        <iframe
+            title="FreshMart Public Store Map"
+            src="https://maps.google.com/maps?q=Father%20Saturnino%20Urios%20University,%20San%20Francisco%20St,%20Butuan%20City,%208600%20Agusan%20del%20Norte&z=16&output=embed"
+            class="w-full h-72"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen
+        ></iframe>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="mb-16">
+    <h2 class="text-3xl font-bold text-center mb-10 text-gray-800 dark:text-slate-100">Why Choose FreshMart?</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+        <div class="p-6 bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-100 dark:border-slate-700 hover:shadow-md transition">
+            <div class="w-16 h-16 mx-auto bg-green-100 dark:bg-green-500/15 text-green-500 dark:text-green-300 rounded-full flex items-center justify-center mb-4">
+                <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            </div>
+            <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-slate-100">Fast Delivery</h3>
+            <p class="text-gray-600 dark:text-slate-300">Get your daily staples and fresh food delivered to your doorstep within hours.</p>
+        </div>
+        <div class="p-6 bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-100 dark:border-slate-700 hover:shadow-md transition">
+            <div class="w-16 h-16 mx-auto bg-green-100 dark:bg-green-500/15 text-green-500 dark:text-green-300 rounded-full flex items-center justify-center mb-4">
+                <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                </svg>
+            </div>
+            <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-slate-100">Farm Fresh</h3>
+            <p class="text-gray-600 dark:text-slate-300">We source locally from verified farmers to ensure the highest quality produce.</p>
+        </div>
+        <div class="p-6 bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-100 dark:border-slate-700 hover:shadow-md transition">
+            <div class="w-16 h-16 mx-auto bg-green-100 dark:bg-green-500/15 text-green-500 dark:text-green-300 rounded-full flex items-center justify-center mb-4">
+                <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+            </div>
+            <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-slate-100">Secure Payments</h3>
+            <p class="text-gray-600 dark:text-slate-300">Your payments are highly secure with multiple hassle-free checkout options.</p>
+        </div>
     </div>
 </div>
 

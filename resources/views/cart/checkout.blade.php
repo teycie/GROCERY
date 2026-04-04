@@ -67,6 +67,48 @@
                     <span class="text-red-500 text-xs font-bold block mt-1">{{ $message }}</span>
                 @enderror
             </div>
+
+            <div class="mt-6 border-t border-gray-100 pt-6">
+                <h3 class="text-lg font-bold text-gray-800">Fulfillment & Payment</h3>
+                <p class="text-sm text-gray-500 mt-1">Choose how you want to receive your order and pay.</p>
+
+                <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div>
+                        <label for="fulfillment_type" class="block text-sm font-semibold text-gray-700 mb-2">Fulfillment Type</label>
+                        <select
+                            id="fulfillment_type"
+                            name="fulfillment_type"
+                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+                            required
+                        >
+                            <option value="">Select option</option>
+                            <option value="delivery" {{ old('fulfillment_type') === 'delivery' ? 'selected' : '' }}>Delivery</option>
+                            <option value="pickup" {{ old('fulfillment_type') === 'pickup' ? 'selected' : '' }}>Pick-up</option>
+                        </select>
+                        @error('fulfillment_type')
+                            <span class="text-red-500 text-xs font-bold block mt-1">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="payment_mode" class="block text-sm font-semibold text-gray-700 mb-2">Payment Method</label>
+                        <select
+                            id="payment_mode"
+                            name="payment_mode"
+                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+                            required
+                        >
+                            <option value="">Select payment method</option>
+                            <option value="cod" {{ old('payment_mode') === 'cod' ? 'selected' : '' }}>Cash on Delivery (COD)</option>
+                            <option value="cash" {{ old('payment_mode') === 'cash' ? 'selected' : '' }}>Cash</option>
+                            <option value="ewallet" {{ old('payment_mode') === 'ewallet' ? 'selected' : '' }}>E-Wallet</option>
+                        </select>
+                        @error('payment_mode')
+                            <span class="text-red-500 text-xs font-bold block mt-1">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="p-6 bg-gray-50/50 border-b border-gray-100">
@@ -131,4 +173,33 @@
         </div>
     </form>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const fulfillmentSelect = document.getElementById('fulfillment_type');
+    const paymentSelect = document.getElementById('payment_mode');
+
+    if (!fulfillmentSelect || !paymentSelect) {
+        return;
+    }
+
+    const codOption = paymentSelect.querySelector('option[value="cod"]');
+
+    function syncPaymentOptions() {
+        if (!codOption) {
+            return;
+        }
+
+        const isPickup = fulfillmentSelect.value === 'pickup';
+        codOption.disabled = isPickup;
+
+        if (isPickup && paymentSelect.value === 'cod') {
+            paymentSelect.value = '';
+        }
+    }
+
+    fulfillmentSelect.addEventListener('change', syncPaymentOptions);
+    syncPaymentOptions();
+});
+</script>
 @endsection

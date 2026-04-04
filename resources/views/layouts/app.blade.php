@@ -146,14 +146,14 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 dark:bg-emerald-950 text-white py-8 mt-auto border-t border-transparent dark:border-green-900/60">
+    <footer class="bg-green-700 dark:bg-emerald-950 text-white py-8 mt-auto border-t border-green-800 dark:border-green-900/60">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-between items-center">
                 <div class="mb-4 md:mb-0">
-                    <span class="text-2xl font-bold text-green-500 dark:text-green-600">FreshMart</span>
-                    <p class="text-gray-400 mt-2 text-sm">Delivering freshness to your doorstep.</p>
+                    <span class="text-2xl font-bold text-green-100 dark:text-green-500">FreshMart</span>
+                    <p class="text-green-100/90 dark:text-gray-400 mt-2 text-sm">Delivering freshness to your doorstep.</p>
                 </div>
-                <div class="text-gray-400 text-sm">
+                <div class="text-green-100/90 dark:text-gray-400 text-sm">
                     &copy; {{ date('Y') }} FreshMart Online Grocery. All rights reserved.
                 </div>
             </div>
