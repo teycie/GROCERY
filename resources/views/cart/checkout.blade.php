@@ -18,6 +18,57 @@
     <!-- Main Checkout Form -->
     <form action="{{ route('cart.checkout') }}" method="POST" class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
         @csrf
+        <div class="p-6 border-b border-gray-100">
+            <h2 class="text-xl font-bold text-gray-800">Customer Details</h2>
+            <p class="text-sm text-gray-500 mt-1">Please provide your delivery/contact information.</p>
+
+            <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label for="first_name" class="block text-sm font-semibold text-gray-700 mb-2">First Name</label>
+                    <input
+                        type="text"
+                        id="first_name"
+                        name="first_name"
+                        value="{{ old('first_name', auth()->user()->first_name) }}"
+                        class="w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+                        required
+                    >
+                    @error('first_name')
+                        <span class="text-red-500 text-xs font-bold block mt-1">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div>
+                    <label for="last_name" class="block text-sm font-semibold text-gray-700 mb-2">Last Name</label>
+                    <input
+                        type="text"
+                        id="last_name"
+                        name="last_name"
+                        value="{{ old('last_name', auth()->user()->last_name) }}"
+                        class="w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+                        required
+                    >
+                    @error('last_name')
+                        <span class="text-red-500 text-xs font-bold block mt-1">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <label for="address" class="block text-sm font-semibold text-gray-700 mb-2">Address</label>
+                <textarea
+                    id="address"
+                    name="address"
+                    rows="3"
+                    class="w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+                    required
+                >{{ old('address', auth()->user()->address) }}</textarea>
+                @error('address')
+                    <span class="text-red-500 text-xs font-bold block mt-1">{{ $message }}</span>
+                @enderror
+            </div>
+        </div>
+
         <div class="p-6 bg-gray-50/50 border-b border-gray-100">
             <h2 class="text-xl font-bold text-gray-800">Order Summary</h2>
         </div>

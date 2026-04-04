@@ -5,8 +5,8 @@
 @section('content')
 <div class="mb-8 flex justify-between items-end">
     <div>
-        <h1 class="text-3xl font-extrabold text-gray-900 dark:text-white transition-colors duration-200">Seller Dashboard</h1>
-        <p class="mt-2 text-gray-600 dark:text-gray-400 transition-colors duration-200">Welcome back, {{ auth()->user()->name }}. Manage your inventory and store updates.</p>
+        <h1 class="text-3xl font-extrabold text-gray-900 dark:text-slate-100 transition-colors duration-200">Seller Dashboard</h1>
+        <p class="mt-2 text-gray-600 dark:text-slate-300 transition-colors duration-200">Welcome back, {{ auth()->user()->name }}. Manage your inventory and store updates.</p>
     </div>
     <div class="space-x-2">
         <a href="{{ route('seller.products.create') }}" class="btn-primary inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200">
@@ -20,27 +20,27 @@
 
 <!-- Analytics Overview -->
 <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 p-6 flex flex-col justify-center transition-colors duration-200">
-        <span class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">Total Active Products</span>
-        <span class="text-3xl font-extrabold text-gray-900 dark:text-white">{{ $productsCount }}</span>
+    <div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-gray-100 dark:border-slate-700 p-6 flex flex-col justify-center transition-colors duration-200">
+        <span class="text-sm font-medium text-gray-500 dark:text-slate-300 mb-1">Total Active Products</span>
+        <span class="text-3xl font-extrabold text-gray-900 dark:text-slate-100">{{ $productsCount }}</span>
     </div>
-    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 p-6 flex flex-col justify-center transition-colors duration-200">
-        <span class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">Items Added to Carts</span>
+    <div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-gray-100 dark:border-slate-700 p-6 flex flex-col justify-center transition-colors duration-200">
+        <span class="text-sm font-medium text-gray-500 dark:text-slate-300 mb-1">Items Added to Carts</span>
         <span class="text-3xl font-extrabold text-blue-600 dark:text-blue-400">{{ $totalCartItems ?? 0 }}</span>
     </div>
-    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 p-6 flex flex-col justify-center transition-colors duration-200">
-        <span class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">Store Potential Revenue</span>
+    <div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-gray-100 dark:border-slate-700 p-6 flex flex-col justify-center transition-colors duration-200">
+        <span class="text-sm font-medium text-gray-500 dark:text-slate-300 mb-1">Store Potential Revenue</span>
         <span class="text-3xl font-extrabold text-green-600 dark:text-green-400">${{ number_format($potentialRevenue ?? 0, 2) }}</span>
     </div>
-    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 p-6 flex flex-col justify-center transition-colors duration-200">
-        <span class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">Total Store Buyers</span>
-        <span class="text-3xl font-extrabold text-purple-600 dark:text-purple-400">{{ $totalBuyers }}</span>
+    <div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-gray-100 dark:border-slate-700 p-6 flex flex-col justify-center transition-colors duration-200">
+        <span class="text-sm font-medium text-gray-500 dark:text-slate-300 mb-1">Total Store Buyers</span>
+        <span class="text-3xl font-extrabold text-indigo-600 dark:text-indigo-400">{{ $totalBuyers }}</span>
     </div>
 </div>
 
 <!-- Chart Section -->
-<div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 p-6 mb-8 transition-colors duration-200">
-    <h2 class="text-xl font-bold text-gray-800 dark:text-white mb-6 border-b border-gray-100 dark:border-gray-700 pb-4">Products by Category</h2>
+<div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-gray-100 dark:border-slate-700 p-6 mb-8 transition-colors duration-200">
+    <h2 class="text-xl font-bold text-gray-800 dark:text-slate-100 mb-6 border-b border-gray-100 dark:border-slate-700 pb-4">Products by Category</h2>
     <div class="relative h-72 w-full">
         <canvas id="categoryChart"></canvas>
     </div>
@@ -51,8 +51,8 @@
     <!-- Stats & Actions Widget -->
     <div class="md:col-span-1 space-y-8">
         <!-- Summary Card -->
-        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 p-6 transition-colors duration-200">
-            <h2 class="text-xl font-bold text-gray-800 dark:text-white mb-4 flex items-center">
+        <div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-gray-100 dark:border-slate-700 p-6 transition-colors duration-200">
+            <h2 class="text-xl font-bold text-gray-800 dark:text-slate-100 mb-4 flex items-center">
                 <svg class="h-6 w-6 text-green-500 dark:text-green-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
@@ -60,7 +60,7 @@
             </h2>
             
             <div class="space-y-3">
-                <a href="{{ route('seller.products.index') }}" class="w-full text-center block bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 text-gray-800 dark:text-white font-semibold py-2 px-4 border border-gray-200 dark:border-gray-600 rounded transition duration-200">
+                <a href="{{ route('seller.products.index') }}" class="w-full text-center block bg-gray-50 dark:bg-slate-800 hover:bg-gray-100 dark:hover:bg-slate-700 text-gray-800 dark:text-slate-100 font-semibold py-2 px-4 border border-gray-200 dark:border-slate-600 rounded transition duration-200">
                     Manage Products
                 </a>
                 <a href="{{ route('seller.announcements.create') }}" class="w-full text-center block bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded shadow-sm transition duration-200">
@@ -72,27 +72,27 @@
 
     <!-- Recent Announcements -->
     <div class="md:col-span-2">
-        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 p-6 h-full transition-colors duration-200">
-            <div class="flex justify-between items-center border-b border-gray-100 dark:border-gray-700 pb-4 mb-4">
-                <h2 class="text-xl font-bold text-gray-800 dark:text-white">Recent Announcements by You</h2>
+        <div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-gray-100 dark:border-slate-700 p-6 h-full transition-colors duration-200">
+            <div class="flex justify-between items-center border-b border-gray-100 dark:border-slate-700 pb-4 mb-4">
+                <h2 class="text-xl font-bold text-gray-800 dark:text-slate-100">Recent Announcements by You</h2>
                 <span class="text-xs font-medium bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-300 px-3 py-1 rounded-full">Updates</span>
             </div>
             
             <div class="space-y-4">
                 @forelse($announcements as $announcement)
-                    <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 hover:border-blue-300 dark:hover:border-blue-500 transition duration-200">
+                    <div class="p-4 rounded-lg bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-600 hover:border-blue-300 dark:hover:border-blue-500 transition duration-200">
                         <div class="flex justify-between items-start mb-2">
-                            <h3 class="font-bold text-gray-900 dark:text-white">{{ $announcement->title }}</h3>
-                            <span class="text-xs text-gray-400 dark:text-gray-400">{{ $announcement->created_at->diffForHumans() }}</span>
+                            <h3 class="font-bold text-gray-900 dark:text-slate-100">{{ $announcement->title }}</h3>
+                            <span class="text-xs text-gray-400 dark:text-slate-400">{{ $announcement->created_at->diffForHumans() }}</span>
                         </div>
-                        <p class="text-sm text-gray-600 dark:text-gray-300">{{ $announcement->message }}</p>
+                        <p class="text-sm text-gray-600 dark:text-slate-300">{{ $announcement->message }}</p>
                     </div>
                 @empty
                     <div class="text-center py-10">
-                        <svg class="mx-auto h-12 w-12 text-gray-300 dark:text-gray-600 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg class="mx-auto h-12 w-12 text-gray-300 dark:text-slate-500 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                         </svg>
-                        <p class="text-gray-500 dark:text-gray-400 font-medium">You haven't posted any announcements yet.</p>
+                        <p class="text-gray-500 dark:text-slate-300 font-medium">You haven't posted any announcements yet.</p>
                         <a href="{{ route('seller.announcements.create') }}" class="text-blue-500 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 text-sm font-semibold mt-2 inline-block">Create one now &rarr;</a>
                     </div>
                 @endforelse

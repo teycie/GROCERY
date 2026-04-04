@@ -12,6 +12,21 @@
             darkMode: 'class',
             theme: {
                 extend: {
+                    colors: {
+                        green: {
+                            50: '#f2fbf4',
+                            100: '#dcf5e3',
+                            200: '#b9ebc9',
+                            300: '#86dda5',
+                            400: '#4fc67a',
+                            500: '#28a95e',
+                            600: '#1f8f4f',
+                            700: '#1b7241',
+                            800: '#175b35',
+                            900: '#144a2d',
+                            950: '#0a2b19',
+                        }
+                    },
                     fontFamily: {
                         sans: ['Nunito', 'sans-serif'],
                     }
@@ -20,7 +35,26 @@
         }
     </script>
     <style>
-        body { font-family: 'Nunito', sans-serif; }
+        :root {
+            color-scheme: light;
+        }
+
+        .dark {
+            color-scheme: dark;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-image:
+                radial-gradient(circle at 12% 8%, rgba(79, 198, 122, 0.08), transparent 32%),
+                radial-gradient(circle at 85% 4%, rgba(134, 221, 165, 0.1), transparent 30%);
+        }
+
+        .dark body {
+            background-image:
+                radial-gradient(circle at 10% 10%, rgba(79, 198, 122, 0.14), transparent 34%),
+                radial-gradient(circle at 90% 0%, rgba(31, 143, 79, 0.18), transparent 33%);
+        }
     </style>
     <!-- Dark Mode Initializer -->
     <script>
@@ -31,9 +65,9 @@
         }
     </script>
 </head>
-<body class="antialiased bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-200 min-h-screen flex flex-col transition-colors duration-200">
+<body class="antialiased bg-gray-50 text-gray-800 dark:bg-emerald-950 dark:text-slate-200 min-h-screen flex flex-col transition-colors duration-200">
     <!-- Main Navigation -->
-    <nav class="bg-white dark:bg-gray-800 shadow relative z-50 sticky top-0 transition-colors duration-200">
+    <nav class="bg-white/95 dark:bg-emerald-950/90 shadow relative z-50 sticky top-0 transition-colors duration-200 border-b border-green-100 dark:border-green-900/60 backdrop-blur">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
@@ -47,16 +81,6 @@
                 </div>
                 
                 <div class="flex items-center space-x-6">
-                    <!-- Dark Mode Toggle Button -->
-                    <button id="theme-toggle" type="button" class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5">
-                        <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
-                        </svg>
-                        <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
-                        </svg>
-                    </button>
-
                     @auth
                         @if(auth()->user()->role === 'buyer')
                             <a href="{{ route('buyer.dashboard') }}" class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-semibold transition">Home</a>
@@ -83,6 +107,16 @@
                         <a href="{{ route('login') }}" class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-semibold transition">Login</a>
                         <a href="{{ route('register') }}" class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-md font-semibold transition">Register</a>
                     @endauth
+
+                    <!-- Dark Mode Toggle Button -->
+                    <button id="theme-toggle" type="button" class="text-gray-500 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-green-900/40 focus:outline-none focus:ring-4 focus:ring-green-100 dark:focus:ring-green-900/60 rounded-lg text-sm p-2.5 border border-transparent dark:border-green-900/60">
+                        <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                        </svg>
+                        <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
                 </div>
             </div>
         </div>
@@ -112,7 +146,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 dark:bg-black text-white py-8 mt-auto">
+    <footer class="bg-gray-900 dark:bg-emerald-950 text-white py-8 mt-auto border-t border-transparent dark:border-green-900/60">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-between items-center">
                 <div class="mb-4 md:mb-0">

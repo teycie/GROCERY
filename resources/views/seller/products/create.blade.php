@@ -32,7 +32,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                    <label for="price" class="block text-sm font-bold text-gray-700 mb-1">Price (?) <span class="text-red-500">*</span></label>
+                    <label for="price" class="block text-sm font-bold text-gray-700 mb-1">Price (₱) <span class="text-red-500">*</span></label>
                     <input type="number" id="price" step="0.01" name="price" value="{{ old('price') }}" min="0" required class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 py-3 px-4 transition" placeholder="0.00">
                 </div>
                 <div>

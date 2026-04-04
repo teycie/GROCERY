@@ -17,18 +17,23 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users',
+            'username' => 'required|string|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
         ]);
 
-        // Buyers register and enter by their name only.
-        // We reuse their account if they use the exact same name, or create a new one.
-        $user = User::firstOrCreate(
-            ['name' => $validated['name'], 'role' => 'buyer'],
-            [
-                'email' => \Illuminate\Support\Str::slug($validated['name']) . '_' . uniqid() . '@buyer.local',
-                'password' => Hash::make(\Illuminate\Support\Str::random(16)),
-            ]
-        );
+        // New registrants are always buyers
+        $user = User::create([
+            'first_name' => $validated['first_name'],
+            'last_name' => $validated['last_name'],
+            'name' => $validated['first_name'] . ' ' . $validated['last_name'],
+            'email' => $validated['email'],
+            'username' => $validated['username'],
+            'password' => Hash::make($validated['password']),
+            'role' => 'buyer',
+        ]);
 
         Auth::login($user);
 

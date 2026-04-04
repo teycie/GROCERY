@@ -37,7 +37,7 @@
             <span class="text-sm font-bold text-green-600 uppercase tracking-wide mb-2 inline-block">{{ $product->category }}</span>
             <h1 class="text-3xl md:text-5xl font-extrabold text-gray-900 mb-4">{{ $product->name }}</h1>
             
-            <div class="text-4xl font-extrabold text-gray-900 mb-6">?{{ number_format($product->price, 2) }}</div>
+            <div class="text-4xl font-extrabold text-gray-900 mb-6">₱{{ number_format($product->price, 2) }}</div>
             
             <p class="text-gray-600 mb-8 leading-relaxed">{{ $product->description }}</p>
 
