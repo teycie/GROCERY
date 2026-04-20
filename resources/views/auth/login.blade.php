@@ -47,7 +47,7 @@
             <div class="rounded-md shadow-sm space-y-4">
                 <div>
                     <label for="email" class="block text-sm font-medium text-gray-700 dark:text-slate-300">Username or Email</label>
-                    <input id="email" name="email" type="email" autocomplete="email" required value="{{ old('email') }}" class="appearance-none rounded-lg relative block w-full px-3 py-3 border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-900 dark:text-slate-100 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm mt-1">
+                    <input id="email" name="email" type="text" autocomplete="username" required value="{{ old('email') }}" class="appearance-none rounded-lg relative block w-full px-3 py-3 border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-900 dark:text-slate-100 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm mt-1">
                 </div>
                 <div>
                     <label for="password" class="block text-sm font-medium text-gray-700 dark:text-slate-300">Password</label>
