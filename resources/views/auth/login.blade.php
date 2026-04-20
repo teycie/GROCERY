@@ -16,7 +16,7 @@
             </h2>
         </div>
 
-        <form class="mt-8 space-y-6" action="{{ route('login') }}" method="POST">
+        <form class="mt-8 space-y-6" action="{{ route('login.submit') }}" method="POST">
             @csrf
 
             <!-- Form Error Block -->

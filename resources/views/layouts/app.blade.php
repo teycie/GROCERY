@@ -91,6 +91,8 @@
                         @elseif(auth()->user()->role === 'seller' || auth()->user()->role === 'admin')
                             <a href="{{ route('seller.dashboard') }}" class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-semibold transition">Dashboard</a>
                             <a href="{{ route('seller.products.index') }}" class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-semibold transition">Products</a>
+                            <a href="{{ route('seller.inventory.index') }}" class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-semibold transition">Inventory</a>
+                            <a href="{{ route('seller.deliveries.index') }}" class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-semibold transition">Deliveries</a>
                             <a href="{{ route('seller.announcements.create') }}" class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-semibold transition">Post Announcement</a>
                         @else
                             <a href="{{ route('dashboard') }}" class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-semibold transition">Dashboard</a>

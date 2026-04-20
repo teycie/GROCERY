@@ -15,11 +15,34 @@
 </div>
 
 <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="px-6 py-4 border-b border-gray-100 bg-gray-50/70">
+        <form method="GET" action="{{ route('seller.products.index') }}" class="flex flex-col md:flex-row md:items-center gap-3">
+            <div class="flex-1">
+                <label for="category" class="block text-xs font-semibold uppercase tracking-wide text-gray-500 mb-1">Filter by Category</label>
+                <select id="category" name="category" onchange="this.form.submit()" class="w-full md:w-80 rounded-md border-gray-300 text-sm focus:border-green-500 focus:ring-green-500">
+                    <option value="">All Categories ({{ array_sum($categoryCounts ?? []) }})</option>
+                    @foreach($categories as $category)
+                        <option value="{{ $category }}" {{ ($selectedCategory ?? '') === $category ? 'selected' : '' }}>
+                            {{ $category }} ({{ $categoryCounts[$category] ?? 0 }})
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+            @if(!empty($selectedCategory))
+                <a href="{{ route('seller.products.index') }}" class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-100 transition">
+                    Clear Filter
+                </a>
+            @endif
+        </form>
+    </div>
+
     <div class="overflow-x-auto">
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
                 <tr>
                     <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Product</th>
+                    <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Posted By</th>
                     <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Category</th>
                     <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Price</th>
                     <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Stock</th>
@@ -46,6 +69,9 @@
                             </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                            {{ $product->user->name ?? 'Unknown Seller' }}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                             {{ $product->category }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-green-600">
@@ -69,7 +95,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="5" class="px-6 py-12 text-center text-gray-500">
+                        <td colspan="6" class="px-6 py-12 text-center text-gray-500">
                             <span class="block text-4xl mb-3">??</span>
                             <p class="text-lg font-medium text-gray-800">Your store has no products</p>
                             <p class="mb-4">Start by adding your first product inventory.</p>

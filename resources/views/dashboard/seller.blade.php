@@ -63,6 +63,12 @@
                 <a href="{{ route('seller.products.index') }}" class="w-full text-center block bg-gray-50 dark:bg-slate-800 hover:bg-gray-100 dark:hover:bg-slate-700 text-gray-800 dark:text-slate-100 font-semibold py-2 px-4 border border-gray-200 dark:border-slate-600 rounded transition duration-200">
                     Manage Products
                 </a>
+                <a href="{{ route('seller.inventory.index') }}" class="w-full text-center block bg-gray-50 dark:bg-slate-800 hover:bg-gray-100 dark:hover:bg-slate-700 text-gray-800 dark:text-slate-100 font-semibold py-2 px-4 border border-gray-200 dark:border-slate-600 rounded transition duration-200">
+                    View Inventory
+                </a>
+                <a href="{{ route('seller.deliveries.index') }}" class="w-full text-center block bg-gray-50 dark:bg-slate-800 hover:bg-gray-100 dark:hover:bg-slate-700 text-gray-800 dark:text-slate-100 font-semibold py-2 px-4 border border-gray-200 dark:border-slate-600 rounded transition duration-200">
+                    Track Deliveries
+                </a>
                 <a href="{{ route('seller.announcements.create') }}" class="w-full text-center block bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded shadow-sm transition duration-200">
                     Post New Announcement
                 </a>
@@ -98,6 +104,42 @@
                 @endforelse
             </div>
         </div>
+    </div>
+</div>
+
+<div class="mt-8 bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-gray-100 dark:border-slate-700 p-6 transition-colors duration-200">
+    <div class="flex justify-between items-center border-b border-gray-100 dark:border-slate-700 pb-4 mb-4">
+        <h2 class="text-xl font-bold text-gray-800 dark:text-slate-100">Latest Seller Products</h2>
+        <a href="{{ route('seller.products.index') }}" class="text-sm font-medium text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300">Manage all</a>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        @forelse($recentProducts as $product)
+            <div class="rounded-xl border border-gray-100 dark:border-slate-700 overflow-hidden bg-gray-50 dark:bg-slate-800">
+                <div class="h-44 bg-gray-100 dark:bg-slate-700">
+                    @if($product->images->count() > 0)
+                        <img src="{{ asset('storage/' . $product->images->first()->image_path) }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
+                    @else
+                        <div class="w-full h-full flex items-center justify-center text-gray-400 dark:text-slate-500">
+                            <svg class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                        </div>
+                    @endif
+                </div>
+                <div class="p-4">
+                    <p class="text-sm text-gray-500 dark:text-slate-300 mb-1 capitalize">{{ $product->category }}</p>
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-slate-100 truncate">{{ $product->name }}</h3>
+                    <p class="mt-1 text-xs text-gray-500 dark:text-slate-400">Posted by {{ $product->user->name ?? 'Unknown Seller' }}</p>
+                    <p class="mt-1 text-sm text-gray-600 dark:text-slate-300">Stock: {{ $product->stock }}</p>
+                    <p class="mt-1 text-sm font-bold text-green-600 dark:text-green-400">₱{{ number_format($product->price, 2) }}</p>
+                </div>
+            </div>
+        @empty
+            <div class="col-span-full py-8 text-center text-gray-500 dark:text-slate-300 bg-gray-50 dark:bg-slate-800 rounded-lg">
+                <p>You haven't added any products yet.</p>
+            </div>
+        @endforelse
     </div>
 </div>
 

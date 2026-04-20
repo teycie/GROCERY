@@ -62,6 +62,7 @@
                     <div>
                         <p class="text-sm text-gray-500 dark:text-slate-300 mb-1 capitalize">{{ $product->category }}</p>
                         <h3 class="text-lg font-bold text-gray-900 dark:text-slate-100 mb-2 truncate">{{ $product->name }}</h3>
+                        <p class="text-xs text-gray-500 dark:text-slate-400">Sold by {{ $product->user->name ?? 'FreshMart Seller' }}</p>
                     </div>
                     <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100 dark:border-slate-700">
                         <span class="text-xl font-extrabold text-green-600">&#8369;{{ number_format($product->price, 2) }}</span>

@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Product;
 use App\Models\ProductImage;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ProductImageSeeder extends Seeder
@@ -15,10 +14,26 @@ class ProductImageSeeder extends Seeder
         $products = Product::all();
         $imageCount = 0;
 
-        foreach ($products as $product) {
-            $product->images()->delete();
+        $availableCategoryImages = [
+            'frozen',
+            'beverage',
+            'snacks',
+            'fruits-vegetables',
+            'pet-care',
+            'household-cleaning-essentials',
+        ];
 
-            $filename = 'products/cat_' . Str::slug($product->category) . '.svg';
+        foreach ($products as $product) {
+            if ($product->images()->exists()) {
+                continue;
+            }
+
+            $categorySlug = Str::slug($product->category);
+            if (!in_array($categorySlug, $availableCategoryImages, true)) {
+                $categorySlug = 'snacks';
+            }
+
+            $filename = 'products/cat_' . $categorySlug . '.svg';
 
             ProductImage::create([
                 'product_id' => $product->id,

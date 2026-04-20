@@ -4,6 +4,8 @@ use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DeliveryController;
+use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -54,8 +56,10 @@ Route::middleware(['auth', 'role:buyer'])->group(function () {
     Route::post('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
 });
 
-Route::prefix('seller')->middleware(['auth', 'role:seller'])->group(function () {
+Route::prefix('seller')->middleware(['auth', 'role:seller,admin'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'sellerDashboard'])->name('seller.dashboard');
+    Route::get('/inventory', [InventoryController::class, 'index'])->name('seller.inventory.index');
+    Route::get('/deliveries', [DeliveryController::class, 'index'])->name('seller.deliveries.index');
 
     Route::get('/products', [ProductController::class, 'sellerIndex'])->name('seller.products.index');
     Route::get('/products/create', [ProductController::class, 'create'])->name('seller.products.create');

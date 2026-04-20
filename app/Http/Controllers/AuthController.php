@@ -47,13 +47,21 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->validate([
-            'email' => 'required|email',
+        $input = $request->validate([
+            'email' => 'required|string',
             'password' => 'required|string',
         ]);
 
+        // Determine if input is email or username
+        $fieldName = filter_var($input['email'], FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+        
+        $credentials = [
+            $fieldName => $input['email'],
+            'password' => $input['password'],
+        ];
+
         if (!Auth::attempt($credentials)) {
-            return back()->withErrors(['email' => 'Invalid email or password.'])->withInput();
+            return back()->withErrors(['email' => 'Invalid email/username or password.'])->withInput();
         }
 
         $request->session()->regenerate();

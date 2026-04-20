@@ -16,7 +16,13 @@ class DashboardController extends Controller
             return redirect()->route('dashboard');
         }
 
-        $products = Product::latest()->take(8)->get();
+        $products = Product::with('user')
+            ->whereHas('user', function ($userQuery) {
+                $userQuery->whereIn('role', ['seller', 'admin']);
+            })
+            ->latest()
+            ->take(8)
+            ->get();
         $announcements = Announcement::latest()->take(3)->get();
 
         return view('dashboard.guest', compact('products', 'announcements'));
@@ -36,7 +42,13 @@ class DashboardController extends Controller
 
     public function buyerDashboard()
     {
-        $products = Product::latest()->take(6)->get();
+        $products = Product::with('user')
+            ->whereHas('user', function ($userQuery) {
+                $userQuery->whereIn('role', ['seller', 'admin']);
+            })
+            ->latest()
+            ->take(6)
+            ->get();
         $announcements = Announcement::latest()->take(5)->get();
         
         // Analytics
@@ -59,8 +71,10 @@ class DashboardController extends Controller
 
     public function sellerDashboard()
     {
-        $sellerId = Auth::id();
-        $productsCount = Auth::user()->products()->count();
+        $sellerIds = User::whereIn('role', ['seller', 'admin'])->pluck('id');
+        $productsQuery = Product::whereIn('user_id', $sellerIds)->with('images');
+        $productsCount = $productsQuery->count();
+        $recentProducts = (clone $productsQuery)->latest()->take(6)->get();
         $announcements = Announcement::latest()->take(5)->get();
         
         // Analytics
@@ -68,16 +82,16 @@ class DashboardController extends Controller
         
         $totalCartItems = DB::table('cart_items')
             ->join('products', 'cart_items.product_id', '=', 'products.id')
-            ->where('products.user_id', $sellerId)
+            ->whereIn('products.user_id', $sellerIds)
             ->sum('cart_items.quantity');
             
         $potentialRevenue = DB::table('cart_items')
             ->join('products', 'cart_items.product_id', '=', 'products.id')
-            ->where('products.user_id', $sellerId)
+            ->whereIn('products.user_id', $sellerIds)
             ->sum(DB::raw('cart_items.quantity * products.price'));
 
         // Chart Data: Products by Category
-        $categoryData = Product::where('user_id', $sellerId)
+        $categoryData = Product::whereIn('user_id', $sellerIds)
             ->select('category', DB::raw('count(*) as count'))
             ->groupBy('category')
             ->pluck('count', 'category')
@@ -87,7 +101,7 @@ class DashboardController extends Controller
         $chartValues = array_values($categoryData);
 
         return view('dashboard.seller', compact(
-            'productsCount', 'announcements', 'totalBuyers', 'totalCartItems', 'potentialRevenue', 'chartLabels', 'chartValues'
+            'productsCount', 'recentProducts', 'announcements', 'totalBuyers', 'totalCartItems', 'potentialRevenue', 'chartLabels', 'chartValues'
         ));
     }
 }

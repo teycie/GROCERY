@@ -53,12 +53,28 @@
                 @if($product->images->count() > 0)
                     <div class="bg-gray-50 p-4 rounded-lg mt-4">
                         <p class="text-sm font-bold text-gray-700 mb-3">Current Images ({{ $product->images->count() }})</p>
-                        <div class="flex gap-4 overflow-x-auto pb-2">
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                             @foreach($product->images as $image)
-                                <img src="{{ asset('storage/' . $image->image_path) }}" alt="Product image" class="h-24 w-24 object-cover rounded-md border border-gray-200 shadow-sm flex-shrink-0">
+                                <div class="rounded-lg border border-gray-200 bg-white p-3 shadow-sm">
+                                    <img src="{{ asset('storage/' . $image->image_path) }}" alt="Product image" class="h-24 w-full object-cover rounded-md border border-gray-200 shadow-sm">
+                                    <div class="mt-3 space-y-2">
+                                        <label class="block text-[11px] font-semibold text-gray-600 uppercase tracking-wide">Replace image</label>
+                                        <input type="file" name="replace_images[{{ $image->id }}]" accept="image/*" class="block w-full text-xs text-gray-500 file:mr-3 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100">
+                                        <label class="inline-flex items-center gap-2 text-sm text-red-600 cursor-pointer">
+                                            <input
+                                                type="checkbox"
+                                                name="delete_images[]"
+                                                value="{{ $image->id }}"
+                                                class="rounded border-gray-300 text-red-600 focus:ring-red-500"
+                                                {{ in_array($image->id, old('delete_images', [])) ? 'checked' : '' }}
+                                            >
+                                            Delete this image
+                                        </label>
+                                    </div>
+                                </div>
                             @endforeach
                         </div>
-                        <p class="text-xs text-gray-500 mt-2">Uploading new images will add them alongside these existing images.</p>
+                        <p class="text-xs text-gray-500 mt-2">Use Replace image to swap a photo, or tick Delete this image to remove it. Uploading new images will add them alongside the remaining images.</p>
                     </div>
                 @endif
             </div>
