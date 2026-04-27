@@ -19317,9 +19317,12 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
 /*!*******************************!*\
   !*** ./resources/css/app.css ***!
   \*******************************/
-() {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-throw new Error("Module build failed (from ./node_modules/mini-css-extract-plugin/dist/loader.js):\nModuleBuildError: Module build failed (from ./node_modules/postcss-loader/dist/cjs.js):\nReferenceError: module is not defined in ES module scope\nThis file is being treated as an ES module because it has a '.js' file extension and 'C:\\Users\\Mike Angelo\\package.json' contains \"type\": \"module\". To treat it as a CommonJS script, rename it to use the '.cjs' file extension.\n    at file:///C:/Users/Mike%20Angelo/postcss.config.js:1:1\n    at ModuleJobSync.runSync (node:internal/modules/esm/module_job:507:37)\n    at ModuleLoader.importSyncForRequire (node:internal/modules/esm/loader:441:47)\n    at loadESMFromCJS (node:internal/modules/cjs/loader:1567:24)\n    at Module._compile (node:internal/modules/cjs/loader:1720:5)\n    at Object..js (node:internal/modules/cjs/loader:1871:10)\n    at Module.load (node:internal/modules/cjs/loader:1470:32)\n    at Module._load (node:internal/modules/cjs/loader:1290:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:238:24)\n    at Module.require (node:internal/modules/cjs/loader:1493:12)\n    at module.exports (C:\\Users\\Mike Angelo\\GROCERY\\node_modules\\import-fresh\\index.js:33:91)\n    at loadJs (C:\\Users\\Mike Angelo\\GROCERY\\node_modules\\cosmiconfig\\dist\\loaders.js:16:18)\n    at Explorer.loadFileContent (C:\\Users\\Mike Angelo\\GROCERY\\node_modules\\cosmiconfig\\dist\\Explorer.js:84:32)\n    at Explorer.createCosmiconfigResult (C:\\Users\\Mike Angelo\\GROCERY\\node_modules\\cosmiconfig\\dist\\Explorer.js:89:36)\n    at Explorer.loadSearchPlace (C:\\Users\\Mike Angelo\\GROCERY\\node_modules\\cosmiconfig\\dist\\Explorer.js:70:31)\n    at async Explorer.searchDirectory (C:\\Users\\Mike Angelo\\GROCERY\\node_modules\\cosmiconfig\\dist\\Explorer.js:55:27)\n    at async run (C:\\Users\\Mike Angelo\\GROCERY\\node_modules\\cosmiconfig\\dist\\Explorer.js:35:22)\n    at async cacheWrapper (C:\\Users\\Mike Angelo\\GROCERY\\node_modules\\cosmiconfig\\dist\\cacheWrapper.js:16:18)\n    at async cacheWrapper (C:\\Users\\Mike Angelo\\GROCERY\\node_modules\\cosmiconfig\\dist\\cacheWrapper.js:16:18)\n    at async cacheWrapper (C:\\Users\\Mike Angelo\\GROCERY\\node_modules\\cosmiconfig\\dist\\cacheWrapper.js:16:18)\n    at async cacheWrapper (C:\\Users\\Mike Angelo\\GROCERY\\node_modules\\cosmiconfig\\dist\\cacheWrapper.js:16:18)\n    at async Explorer.search (C:\\Users\\Mike Angelo\\GROCERY\\node_modules\\cosmiconfig\\dist\\Explorer.js:27:20)\n    at async loadConfig (C:\\Users\\Mike Angelo\\GROCERY\\node_modules\\postcss-loader\\dist\\utils.js:68:16)\n    at async Object.loader (C:\\Users\\Mike Angelo\\GROCERY\\node_modules\\postcss-loader\\dist\\index.js:54:22)\n    at processResult (C:\\Users\\Mike Angelo\\GROCERY\\node_modules\\webpack\\lib\\NormalModule.js:961:19)\n    at C:\\Users\\Mike Angelo\\GROCERY\\node_modules\\webpack\\lib\\NormalModule.js:1163:5\n    at C:\\Users\\Mike Angelo\\GROCERY\\node_modules\\loader-runner\\lib\\LoaderRunner.js:499:11\n    at runSyncOrAsyncCallback (C:\\Users\\Mike Angelo\\GROCERY\\node_modules\\loader-runner\\lib\\LoaderRunner.js:259:19)\n    at innerCallback (C:\\Users\\Mike Angelo\\GROCERY\\node_modules\\loader-runner\\lib\\LoaderRunner.js:175:13)\n    at Object.loader (C:\\Users\\Mike Angelo\\GROCERY\\node_modules\\postcss-loader\\dist\\index.js:56:7)");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
 
 /***/ },
 
@@ -19563,7 +19566,42 @@ module.exports = /*#__PURE__*/JSON.parse('{"name":"axios","version":"0.21.4","de
 /******/ 		return module.exports;
 /******/ 	}
 /******/ 	
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = __webpack_modules__;
+/******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/chunk loaded */
+/******/ 	(() => {
+/******/ 		var deferred = [];
+/******/ 		__webpack_require__.O = (result, chunkIds, fn, priority) => {
+/******/ 			if(chunkIds) {
+/******/ 				priority = priority || 0;
+/******/ 				for(var i = deferred.length; i > 0 && deferred[i - 1][2] > priority; i--) deferred[i] = deferred[i - 1];
+/******/ 				deferred[i] = [chunkIds, fn, priority];
+/******/ 				return;
+/******/ 			}
+/******/ 			var notFulfilled = Infinity;
+/******/ 			for (var i = 0; i < deferred.length; i++) {
+/******/ 				var [chunkIds, fn, priority] = deferred[i];
+/******/ 				var fulfilled = true;
+/******/ 				for (var j = 0; j < chunkIds.length; j++) {
+/******/ 					if ((priority & 1 === 0 || notFulfilled >= priority) && Object.keys(__webpack_require__.O).every((key) => (__webpack_require__.O[key](chunkIds[j])))) {
+/******/ 						chunkIds.splice(j--, 1);
+/******/ 					} else {
+/******/ 						fulfilled = false;
+/******/ 						if(priority < notFulfilled) notFulfilled = priority;
+/******/ 					}
+/******/ 				}
+/******/ 				if(fulfilled) {
+/******/ 					deferred.splice(i--, 1)
+/******/ 					var r = fn();
+/******/ 					if (r !== undefined) result = r;
+/******/ 				}
+/******/ 			}
+/******/ 			return result;
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/global */
 /******/ 	(() => {
 /******/ 		__webpack_require__.g = (function() {
@@ -19576,6 +19614,22 @@ module.exports = /*#__PURE__*/JSON.parse('{"name":"axios","version":"0.21.4","de
 /******/ 		})();
 /******/ 	})();
 /******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/node module decorator */
 /******/ 	(() => {
 /******/ 		__webpack_require__.nmd = (module) => {
@@ -19585,13 +19639,68 @@ module.exports = /*#__PURE__*/JSON.parse('{"name":"axios","version":"0.21.4","de
 /******/ 		};
 /******/ 	})();
 /******/ 	
+/******/ 	/* webpack/runtime/jsonp chunk loading */
+/******/ 	(() => {
+/******/ 		// no baseURI
+/******/ 		
+/******/ 		// object to store loaded and loading chunks
+/******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
+/******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
+/******/ 		var installedChunks = {
+/******/ 			"/js/app": 0,
+/******/ 			"css/app": 0
+/******/ 		};
+/******/ 		
+/******/ 		// no chunk on demand loading
+/******/ 		
+/******/ 		// no prefetching
+/******/ 		
+/******/ 		// no preloaded
+/******/ 		
+/******/ 		// no HMR
+/******/ 		
+/******/ 		// no HMR manifest
+/******/ 		
+/******/ 		__webpack_require__.O.j = (chunkId) => (installedChunks[chunkId] === 0);
+/******/ 		
+/******/ 		// install a JSONP callback for chunk loading
+/******/ 		var webpackJsonpCallback = (parentChunkLoadingFunction, data) => {
+/******/ 			var [chunkIds, moreModules, runtime] = data;
+/******/ 			// add "moreModules" to the modules object,
+/******/ 			// then flag all "chunkIds" as loaded and fire callback
+/******/ 			var moduleId, chunkId, i = 0;
+/******/ 			if(chunkIds.some((id) => (installedChunks[id] !== 0))) {
+/******/ 				for(moduleId in moreModules) {
+/******/ 					if(__webpack_require__.o(moreModules, moduleId)) {
+/******/ 						__webpack_require__.m[moduleId] = moreModules[moduleId];
+/******/ 					}
+/******/ 				}
+/******/ 				if(runtime) var result = runtime(__webpack_require__);
+/******/ 			}
+/******/ 			if(parentChunkLoadingFunction) parentChunkLoadingFunction(data);
+/******/ 			for(;i < chunkIds.length; i++) {
+/******/ 				chunkId = chunkIds[i];
+/******/ 				if(__webpack_require__.o(installedChunks, chunkId) && installedChunks[chunkId]) {
+/******/ 					installedChunks[chunkId][0]();
+/******/ 				}
+/******/ 				installedChunks[chunkId] = 0;
+/******/ 			}
+/******/ 			return __webpack_require__.O(result);
+/******/ 		}
+/******/ 		
+/******/ 		var chunkLoadingGlobal = self["webpackChunk"] = self["webpackChunk"] || [];
+/******/ 		chunkLoadingGlobal.forEach(webpackJsonpCallback.bind(null, 0));
+/******/ 		chunkLoadingGlobal.push = webpackJsonpCallback.bind(null, chunkLoadingGlobal.push.bind(chunkLoadingGlobal));
+/******/ 	})();
+/******/ 	
 /************************************************************************/
 /******/ 	
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
-/******/ 	__webpack_require__("./resources/js/app.js");
-/******/ 	// This entry module doesn't tell about it's top-level declarations so it can't be inlined
-/******/ 	var __webpack_exports__ = __webpack_require__("./resources/css/app.css");
+/******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
+/******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/js/app.js")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/css/app.css")))
+/******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()
 ;

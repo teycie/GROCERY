@@ -39,7 +39,9 @@ Route::middleware('auth')->group(function () {
     
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/profile', [ProfileController::class, 'updateProfile'])->name('profile.update');
+    Route::get('/profile/account-settings', [ProfileController::class, 'settings'])->name('profile.settings');
+    Route::put('/profile/account-settings', [ProfileController::class, 'updateSettings'])->name('profile.settings.update');
 
     Route::get('/products', [ProductController::class, 'index'])->name('products.index');
     Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
@@ -60,6 +62,8 @@ Route::prefix('seller')->middleware(['auth', 'role:seller,admin'])->group(functi
     Route::get('/dashboard', [DashboardController::class, 'sellerDashboard'])->name('seller.dashboard');
     Route::get('/inventory', [InventoryController::class, 'index'])->name('seller.inventory.index');
     Route::get('/deliveries', [DeliveryController::class, 'index'])->name('seller.deliveries.index');
+    Route::get('/deliveries/buyer/{buyer}', [DeliveryController::class, 'buyerDetails'])->name('seller.deliveries.buyer-details');
+    Route::put('/deliveries/{delivery}/status', [DeliveryController::class, 'updateStatus'])->name('seller.deliveries.update-status');
 
     Route::get('/products', [ProductController::class, 'sellerIndex'])->name('seller.products.index');
     Route::get('/products/create', [ProductController::class, 'create'])->name('seller.products.create');

@@ -5,22 +5,29 @@
 @section('content')
 <div class="mb-8">
     <h1 class="text-3xl font-extrabold text-gray-900 dark:text-slate-100 transition-colors duration-200">Welcome back, {{ auth()->user()->name }}!</h1>
-    <p class="mt-2 text-gray-600 dark:text-slate-300 transition-colors duration-200">Here is what's happening at FreshMart today.</p>
 </div>
 
 <!-- Buyer Analytics Overview -->
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-    <div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-gray-100 dark:border-slate-700 p-6 flex flex-col justify-center transition-colors duration-200">
-        <span class="text-sm font-medium text-gray-500 dark:text-slate-300 mb-1">Store Products Available</span>
-        <span class="text-3xl font-extrabold text-gray-900 dark:text-slate-100">{{ $totalProductsAvailable }}</span>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+    <div class="min-h-[130px] bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 p-5 flex flex-col justify-center transition-colors duration-200">
+        <span class="text-sm font-medium text-gray-500 dark:text-slate-300 mb-2">Store Products Available</span>
+        <span class="text-3xl font-extrabold leading-none text-gray-900 dark:text-slate-100">{{ $totalProductsAvailable }}</span>
     </div>
-    <div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-gray-100 dark:border-slate-700 p-6 flex flex-col justify-center transition-colors duration-200">
-        <span class="text-sm font-medium text-gray-500 dark:text-slate-300 mb-1">Items in Your Cart</span>
-        <span class="text-3xl font-extrabold text-green-600 dark:text-green-400">{{ $cartItemsCount }}</span>
+    <div class="min-h-[130px] bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 p-5 flex flex-col justify-center transition-colors duration-200">
+        <span class="text-sm font-medium text-gray-500 dark:text-slate-300 mb-2">Items in Your Cart</span>
+        <span class="text-3xl font-extrabold leading-none text-green-600 dark:text-green-400">{{ $cartItemsCount }}</span>
     </div>
-    <div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-gray-100 dark:border-slate-700 p-6 flex flex-col justify-center transition-colors duration-200">
-        <span class="text-sm font-medium text-gray-500 dark:text-slate-300 mb-1">Current Cart Total</span>
-        <span class="text-3xl font-extrabold text-blue-600 dark:text-blue-400">&#8369;{{ number_format($cartTotalValue, 2) }}</span>
+
+    <div class="min-h-[130px] bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 p-5 flex flex-col justify-center transition-colors duration-200">
+        <span class="text-sm font-medium text-gray-500 dark:text-slate-300 mb-2">My Purchases</span>
+        <span class="text-3xl font-extrabold leading-none text-indigo-600 dark:text-indigo-400">{{ $totalPurchases ?? 0 }}</span>
+    </div>
+
+    <div class="min-h-[130px] bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 p-5 flex flex-col justify-center transition-colors duration-200">
+        <span class="text-sm font-medium text-gray-500 dark:text-slate-300 mb-2">Track Orders</span>
+        <a href="{{ route('cart.index') }}#buyer-tracking" class="mt-1 inline-flex items-center justify-center rounded-xl bg-green-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-green-700">
+            Go to Tracking Section
+        </a>
     </div>
 </div>
 
@@ -122,6 +129,52 @@
             </svg>
         </div>
 
+    </div>
+</div>
+
+<div class="mt-8 bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-gray-100 dark:border-slate-700 p-6 transition-colors duration-200">
+    <div class="flex justify-between items-center mb-6 border-b border-transparent dark:border-slate-700 pb-2">
+        <h2 class="text-2xl font-bold text-gray-800 dark:text-slate-100">My Purchases</h2>
+        <a href="{{ route('cart.index') }}#buyer-tracking" class="text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-300 font-medium">Open tracking <span aria-hidden="true">&rarr;</span></a>
+    </div>
+
+    <div class="space-y-4">
+        @forelse($recentPurchases as $purchase)
+            @php
+                $status = $purchase->tracking_status;
+                $statusClass = 'bg-gray-100 text-gray-700 dark:bg-slate-800 dark:text-slate-200';
+
+                if ($status === 'approved') {
+                    $statusClass = 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300';
+                } elseif (in_array($status, ['processing', 'preparing'], true)) {
+                    $statusClass = 'bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300';
+                } elseif (in_array($status, ['shipped', 'ready'], true)) {
+                    $statusClass = 'bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300';
+                } elseif (in_array($status, ['out_for_delivery', 'ready_to_pickup'], true)) {
+                    $statusClass = 'bg-purple-100 text-purple-800 dark:bg-purple-900/40 dark:text-purple-300';
+                } elseif (in_array($status, ['delivered', 'picked_up'], true)) {
+                    $statusClass = 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300';
+                }
+            @endphp
+
+            <a href="{{ route('cart.index') }}#buyer-tracking" class="block rounded-xl border border-gray-100 dark:border-slate-700 bg-gray-50 dark:bg-slate-800/60 p-4 hover:border-green-300 dark:hover:border-green-700 transition">
+                <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                    <div>
+                        <h3 class="font-bold text-gray-900 dark:text-slate-100">{{ $purchase->product->name ?? 'Unknown Product' }}</h3>
+                        <p class="text-sm text-gray-500 dark:text-slate-400 mt-1">Seller: {{ $purchase->seller->name ?? 'Unknown Seller' }} • Order {{ $purchase->order_id }}</p>
+                        <p class="text-sm text-gray-500 dark:text-slate-400 mt-1">{{ ucfirst($purchase->fulfillment_type ?? 'delivery') }} • Qty {{ $purchase->quantity }}</p>
+                    </div>
+                    <div class="text-left md:text-right">
+                        <span class="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold {{ $statusClass }}">{{ str_replace('_', ' ', ucfirst($status)) }}</span>
+                        <p class="text-xs text-gray-400 dark:text-slate-500 mt-2">Click to open tracking</p>
+                    </div>
+                </div>
+            </a>
+        @empty
+            <div class="rounded-lg border border-dashed border-gray-300 dark:border-slate-600 p-6 text-center text-gray-500 dark:text-slate-300">
+                No purchases yet. When you checkout, your order will appear here for quick tracking.
+            </div>
+        @endforelse
     </div>
 </div>
 @endsection

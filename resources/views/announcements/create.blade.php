@@ -15,7 +15,6 @@
 
     <div class="bg-white p-8 rounded-xl shadow-sm border border-blue-100 relative overflow-hidden">
         <div class="absolute top-0 left-0 w-1 h-full bg-blue-500"></div>
-        <p class="text-gray-600 mb-6 font-medium">Have something important to share? Broadcast it to all users globally.</p>
 
         <form action="{{ route('seller.announcements.store') }}" method="POST" class="space-y-6">
             @csrf

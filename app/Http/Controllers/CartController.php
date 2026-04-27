@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Delivery;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 class CartController extends Controller
@@ -40,7 +43,13 @@ class CartController extends Controller
             ];
         }
 
-        return view('cart.index', compact('items', 'total'));
+        $recentTrackings = Delivery::where('user_id', Auth::id())
+            ->with(['product', 'seller'])
+            ->latest()
+            ->take(10)
+            ->get();
+
+        return view('cart.index', compact('items', 'total', 'recentTrackings'));
     }
 
     public function add(Product $product)
@@ -246,11 +255,14 @@ class CartController extends Controller
             $selectedCart[$productId] = $requestedQuantity;
         }
 
-        DB::transaction(function () use ($selectedCart) {
+        DB::transaction(function () use ($selectedCart, $validated, $effectivePaymentMode) {
             $products = Product::whereIn('id', array_keys($selectedCart))
                 ->lockForUpdate()
                 ->get()
                 ->keyBy('id');
+
+            $orderReference = 'ORD-' . now()->format('YmdHis') . '-' . strtoupper(Str::random(5));
+            $lineNumber = 1;
 
             foreach ($selectedCart as $productId => $quantity) {
                 $product = $products[$productId] ?? null;
@@ -272,6 +284,35 @@ class CartController extends Controller
                         'cart' => 'Insufficient stock for ' . $product->name . '. Available: ' . $product->stock . '.',
                     ]);
                 }
+
+                if (!$product->user_id) {
+                    throw ValidationException::withMessages([
+                        'cart' => 'Seller account is missing for ' . $product->name . '.',
+                    ]);
+                }
+
+                $fulfillmentType = $validated['fulfillment_type'];
+                $paymentMode = $effectivePaymentMode;
+                $notes = 'Checkout by ' . $validated['first_name'] . ' ' . $validated['last_name']
+                    . ' | Fulfillment: ' . ucfirst($fulfillmentType)
+                    . ' | Payment: ' . strtoupper($paymentMode);
+
+                Delivery::create([
+                    'order_id' => $orderReference . '-' . $lineNumber,
+                    'user_id' => Auth::id(),
+                    'seller_id' => $product->user_id,
+                    'product_id' => $product->id,
+                    'quantity' => $quantity,
+                    'fulfillment_type' => $fulfillmentType,
+                    'payment_mode' => $paymentMode,
+                    'status' => 'pending',
+                    'tracking_status' => 'pending',
+                    'address' => $validated['address'],
+                    'estimated_date' => $fulfillmentType === 'delivery' ? now()->addDays(3)->toDateString() : null,
+                    'notes' => $notes,
+                ]);
+
+                $lineNumber++;
 
                 $product->decrement('stock', $quantity);
             }

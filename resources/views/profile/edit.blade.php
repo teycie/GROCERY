@@ -24,34 +24,6 @@
                 @enderror
             </div>
 
-            <div>
-                <label class="block text-sm font-bold text-gray-700 dark:text-slate-200 mb-1">Email address <span class="text-red-500">*</span></label>
-                <input type="email" name="email" value="{{ old('email', $user->email) }}" required class="w-full rounded-lg border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-900 dark:text-slate-100 focus:border-green-500 focus:ring focus:ring-green-200 dark:focus:ring-green-500/20 focus:ring-opacity-50 py-3 px-4 transition">
-                @error('email')
-                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                @enderror
-            </div>
-
-            <div class="border-t border-gray-100 dark:border-slate-800 pt-6 mt-6">
-                <h3 class="text-lg font-bold text-gray-900 dark:text-slate-100 mb-4">Change Password</h3>
-                <p class="text-sm text-gray-500 dark:text-slate-300 mb-4">Leave these fields blank if you do not want to change your password.</p>
-                
-                <div class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 dark:text-slate-200 mb-1">New Password</label>
-                        <input type="password" name="password" placeholder="Enter new password" class="w-full rounded-lg border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-900 dark:text-slate-100 focus:border-green-500 focus:ring focus:ring-green-200 dark:focus:ring-green-500/20 focus:ring-opacity-50 py-3 px-4 transition">
-                        @error('password')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 dark:text-slate-200 mb-1">Confirm New Password</label>
-                        <input type="password" name="password_confirmation" placeholder="Confirm new password" class="w-full rounded-lg border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-900 dark:text-slate-100 focus:border-green-500 focus:ring focus:ring-green-200 dark:focus:ring-green-500/20 focus:ring-opacity-50 py-3 px-4 transition">
-                    </div>
-                </div>
-            </div>
-
             <div class="flex justify-end gap-3 pt-6 border-t border-gray-100 dark:border-slate-800 mt-6">
                 <a href="{{ route('profile.show') }}" class="px-6 py-3 border border-gray-300 dark:border-slate-600 text-gray-700 dark:text-slate-200 bg-white dark:bg-slate-900 rounded-lg font-bold hover:bg-gray-50 dark:hover:bg-slate-800 transition shadow-sm">Cancel</a>
                 <button type="submit" class="px-6 py-3 border border-transparent bg-green-600 text-white rounded-lg font-bold hover:bg-green-700 transition shadow-md shadow-green-600/30">Save Changes</button>

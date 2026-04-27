@@ -38,6 +38,17 @@
     </div>
 </div>
 
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+    <div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-gray-100 dark:border-slate-700 p-6 flex flex-col justify-center transition-colors duration-200">
+        <span class="text-sm font-medium text-gray-500 dark:text-slate-300 mb-1">Total Buyer Checkouts</span>
+        <span class="text-3xl font-extrabold text-emerald-600 dark:text-emerald-400">{{ $totalCheckoutOrders ?? 0 }}</span>
+    </div>
+    <div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-gray-100 dark:border-slate-700 p-6 flex flex-col justify-center transition-colors duration-200">
+        <span class="text-sm font-medium text-gray-500 dark:text-slate-300 mb-1">Pending Checkout Orders</span>
+        <span class="text-3xl font-extrabold text-amber-600 dark:text-amber-400">{{ $pendingCheckoutOrders ?? 0 }}</span>
+    </div>
+</div>
+
 <!-- Chart Section -->
 <div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-gray-100 dark:border-slate-700 p-6 mb-8 transition-colors duration-200">
     <h2 class="text-xl font-bold text-gray-800 dark:text-slate-100 mb-6 border-b border-gray-100 dark:border-slate-700 pb-4">Products by Category</h2>
@@ -104,6 +115,34 @@
                 @endforelse
             </div>
         </div>
+    </div>
+</div>
+
+<div class="mt-8 bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-gray-100 dark:border-slate-700 p-6 transition-colors duration-200">
+    <div class="flex justify-between items-center border-b border-gray-100 dark:border-slate-700 pb-4 mb-4">
+        <h2 class="text-xl font-bold text-gray-800 dark:text-slate-100">Recent Buyer Checkouts</h2>
+        <a href="{{ route('seller.deliveries.index') }}" class="text-sm font-medium text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300">View deliveries</a>
+    </div>
+
+    <div class="space-y-3">
+        @forelse($recentCheckouts as $checkout)
+            <div class="rounded-lg border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 p-4">
+                <div class="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+                    <div>
+                        <p class="text-sm font-semibold text-gray-900 dark:text-slate-100">{{ $checkout->product->name ?? 'Unknown Product' }}</p>
+                        <p class="text-xs text-gray-500 dark:text-slate-400">Order {{ $checkout->order_id }} • Buyer {{ $checkout->user->name ?? 'Unknown Buyer' }}</p>
+                    </div>
+                    <div class="text-left md:text-right">
+                        <p class="text-sm font-semibold text-green-600 dark:text-green-400">Qty: {{ $checkout->quantity }}</p>
+                        <p class="text-xs text-gray-500 dark:text-slate-400">{{ $checkout->created_at->format('M d, Y h:i A') }}</p>
+                    </div>
+                </div>
+            </div>
+        @empty
+            <div class="rounded-lg border border-dashed border-gray-300 dark:border-slate-600 p-6 text-center text-gray-500 dark:text-slate-300">
+                No buyer checkouts yet.
+            </div>
+        @endforelse
     </div>
 </div>
 
