@@ -145,7 +145,7 @@ class DashboardController extends Controller
 
         $recentCheckouts = Delivery::with(['product', 'user'])
             ->latest()
-            ->take(8)
+            ->take(2)
             ->get();
 
         $totalCheckoutOrders = Delivery::count();
