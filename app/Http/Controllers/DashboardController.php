@@ -50,23 +50,35 @@ class DashboardController extends Controller
 
     public function buyerDashboard()
     {
-        $products = Product::with('user')
+        $search = trim((string) request('search', ''));
+
+        $productsQuery = Product::with('user')
             ->whereHas('user', function ($userQuery) {
                 $userQuery->whereIn('role', ['seller', 'admin']);
-            })
+            });
+
+        if ($search !== '') {
+            $productsQuery->where(function ($query) use ($search) {
+                $query->where('name', 'like', '%' . $search . '%')
+                    ->orWhere('category', 'like', '%' . $search . '%');
+            });
+        }
+
+        $products = $productsQuery
             ->latest()
             ->take(6)
             ->get();
         $announcements = Announcement::latest()->take(5)->get();
+
+        $recentPurchases = Delivery::where('user_id', Auth::id())
+            ->with(['product', 'seller'])
+            ->latest()
+            ->take(2)
+            ->get();
         
         // Analytics
         $totalProductsAvailable = Product::count();
         $cart = Auth::user()->cart;
-        $recentPurchases = Delivery::where('user_id', Auth::id())
-            ->with(['product', 'seller'])
-            ->latest()
-            ->take(6)
-            ->get();
         $totalPurchases = Delivery::where('user_id', Auth::id())->count();
         $pendingPurchases = Delivery::where('user_id', Auth::id())
             ->where('tracking_status', 'pending')
@@ -91,7 +103,8 @@ class DashboardController extends Controller
             'cartTotalValue',
             'recentPurchases',
             'totalPurchases',
-            'pendingPurchases'
+            'pendingPurchases',
+            'search'
         ));
     }
 

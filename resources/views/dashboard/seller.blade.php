@@ -20,26 +20,26 @@
 
 <!-- Analytics Overview -->
 <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-    <div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-gray-100 dark:border-slate-700 p-6 flex flex-col justify-center transition-colors duration-200">
+    <div class="bg-white dark:bg-[#0f1726] rounded-xl shadow-sm border border-gray-100 dark:border-slate-800 p-6 flex flex-col justify-center transition-colors duration-200">
         <span class="text-sm font-medium text-gray-500 dark:text-slate-300 mb-1">Total Active Products</span>
         <span class="text-3xl font-extrabold text-gray-900 dark:text-slate-100">{{ $productsCount }}</span>
     </div>
-    <div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-gray-100 dark:border-slate-700 p-6 flex flex-col justify-center transition-colors duration-200">
+    <div class="bg-white dark:bg-[#0f1726] rounded-xl shadow-sm border border-gray-100 dark:border-slate-800 p-6 flex flex-col justify-center transition-colors duration-200">
         <span class="text-sm font-medium text-gray-500 dark:text-slate-300 mb-1">Items Added to Carts</span>
         <span class="text-3xl font-extrabold text-blue-600 dark:text-blue-400">{{ $totalCartItems ?? 0 }}</span>
     </div>
-    <div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-gray-100 dark:border-slate-700 p-6 flex flex-col justify-center transition-colors duration-200">
+    <div class="bg-white dark:bg-[#0f1726] rounded-xl shadow-sm border border-gray-100 dark:border-slate-800 p-6 flex flex-col justify-center transition-colors duration-200">
         <span class="text-sm font-medium text-gray-500 dark:text-slate-300 mb-1">Store Potential Revenue</span>
         <span class="text-3xl font-extrabold text-green-600 dark:text-green-400">${{ number_format($potentialRevenue ?? 0, 2) }}</span>
     </div>
-    <div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-gray-100 dark:border-slate-700 p-6 flex flex-col justify-center transition-colors duration-200">
+    <div class="bg-white dark:bg-[#0f1726] rounded-xl shadow-sm border border-gray-100 dark:border-slate-800 p-6 flex flex-col justify-center transition-colors duration-200">
         <span class="text-sm font-medium text-gray-500 dark:text-slate-300 mb-1">Total Store Buyers</span>
         <span class="text-3xl font-extrabold text-indigo-600 dark:text-indigo-400">{{ $totalBuyers }}</span>
     </div>
 </div>
 
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-    <div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-gray-100 dark:border-slate-700 p-6 flex flex-col justify-center transition-colors duration-200">
+    <div class="bg-white dark:bg-[#0f1726] rounded-xl shadow-sm border border-gray-100 dark:border-slate-800 p-6 flex flex-col justify-center transition-colors duration-200">
         <span class="text-sm font-medium text-gray-500 dark:text-slate-300 mb-1">Total Buyer Checkouts</span>
         <span class="text-3xl font-extrabold text-emerald-600 dark:text-emerald-400">{{ $totalCheckoutOrders ?? 0 }}</span>
     </div>
@@ -50,8 +50,8 @@
 </div>
 
 <!-- Chart Section -->
-<div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-gray-100 dark:border-slate-700 p-6 mb-8 transition-colors duration-200">
-    <h2 class="text-xl font-bold text-gray-800 dark:text-slate-100 mb-6 border-b border-gray-100 dark:border-slate-700 pb-4">Products by Category</h2>
+<div class="bg-white dark:bg-[#0f1726] rounded-xl shadow-sm border border-gray-100 dark:border-slate-800 p-6 mb-8 transition-colors duration-200">
+    <h2 class="text-xl font-bold text-gray-800 dark:text-slate-100 mb-6 border-b border-gray-100 dark:border-slate-800 pb-4">Products by Category</h2>
     <div class="relative h-72 w-full">
         <canvas id="categoryChart"></canvas>
     </div>
@@ -62,7 +62,7 @@
     <!-- Stats & Actions Widget -->
     <div class="md:col-span-1 space-y-8">
         <!-- Summary Card -->
-        <div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-gray-100 dark:border-slate-700 p-6 transition-colors duration-200">
+        <div class="bg-white dark:bg-[#0f1726] rounded-xl shadow-sm border border-gray-100 dark:border-slate-800 p-6 transition-colors duration-200">
             <h2 class="text-xl font-bold text-gray-800 dark:text-slate-100 mb-4 flex items-center">
                 <svg class="h-6 w-6 text-green-500 dark:text-green-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -71,13 +71,13 @@
             </h2>
             
             <div class="space-y-3">
-                <a href="{{ route('seller.products.index') }}" class="w-full text-center block bg-gray-50 dark:bg-slate-800 hover:bg-gray-100 dark:hover:bg-slate-700 text-gray-800 dark:text-slate-100 font-semibold py-2 px-4 border border-gray-200 dark:border-slate-600 rounded transition duration-200">
+                <a href="{{ route('seller.products.index') }}" class="w-full text-center block bg-gray-50 dark:bg-[#18243a] hover:bg-gray-100 dark:hover:bg-[#1d2b45] text-gray-800 dark:text-slate-100 font-semibold py-2 px-4 border border-gray-200 dark:border-slate-700 rounded transition duration-200">
                     Manage Products
                 </a>
-                <a href="{{ route('seller.inventory.index') }}" class="w-full text-center block bg-gray-50 dark:bg-slate-800 hover:bg-gray-100 dark:hover:bg-slate-700 text-gray-800 dark:text-slate-100 font-semibold py-2 px-4 border border-gray-200 dark:border-slate-600 rounded transition duration-200">
+                <a href="{{ route('seller.inventory.index') }}" class="w-full text-center block bg-gray-50 dark:bg-[#18243a] hover:bg-gray-100 dark:hover:bg-[#1d2b45] text-gray-800 dark:text-slate-100 font-semibold py-2 px-4 border border-gray-200 dark:border-slate-700 rounded transition duration-200">
                     View Inventory
                 </a>
-                <a href="{{ route('seller.deliveries.index') }}" class="w-full text-center block bg-gray-50 dark:bg-slate-800 hover:bg-gray-100 dark:hover:bg-slate-700 text-gray-800 dark:text-slate-100 font-semibold py-2 px-4 border border-gray-200 dark:border-slate-600 rounded transition duration-200">
+                <a href="{{ route('seller.deliveries.index') }}" class="w-full text-center block bg-gray-50 dark:bg-[#18243a] hover:bg-gray-100 dark:hover:bg-[#1d2b45] text-gray-800 dark:text-slate-100 font-semibold py-2 px-4 border border-gray-200 dark:border-slate-700 rounded transition duration-200">
                     Track Deliveries
                 </a>
                 <a href="{{ route('seller.announcements.create') }}" class="w-full text-center block bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded shadow-sm transition duration-200">
@@ -89,15 +89,15 @@
 
     <!-- Recent Announcements -->
     <div class="md:col-span-2">
-        <div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-gray-100 dark:border-slate-700 p-6 h-full transition-colors duration-200">
-            <div class="flex justify-between items-center border-b border-gray-100 dark:border-slate-700 pb-4 mb-4">
+        <div class="bg-white dark:bg-[#0f1726] rounded-xl shadow-sm border border-gray-100 dark:border-slate-800 p-6 h-full transition-colors duration-200">
+            <div class="flex justify-between items-center border-b border-gray-100 dark:border-slate-800 pb-4 mb-4">
                 <h2 class="text-xl font-bold text-gray-800 dark:text-slate-100">Recent Announcements by You</h2>
                 <span class="text-xs font-medium bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-300 px-3 py-1 rounded-full">Updates</span>
             </div>
             
             <div class="space-y-4">
                 @forelse($announcements as $announcement)
-                    <div class="p-4 rounded-lg bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-600 hover:border-blue-300 dark:hover:border-blue-500 transition duration-200">
+                    <div class="p-4 rounded-lg bg-gray-50 dark:bg-[#18243a] border border-gray-200 dark:border-slate-700 hover:border-slate-500 transition duration-200">
                         <div class="flex justify-between items-start mb-2">
                             <h3 class="font-bold text-gray-900 dark:text-slate-100">{{ $announcement->title }}</h3>
                             <span class="text-xs text-gray-400 dark:text-slate-400">{{ $announcement->created_at->diffForHumans() }}</span>
@@ -110,7 +110,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                         </svg>
                         <p class="text-gray-500 dark:text-slate-300 font-medium">You haven't posted any announcements yet.</p>
-                        <a href="{{ route('seller.announcements.create') }}" class="text-blue-500 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 text-sm font-semibold mt-2 inline-block">Create one now &rarr;</a>
+                        <a href="{{ route('seller.announcements.create') }}" class="text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300 text-sm font-semibold mt-2 inline-block">Create one now &rarr;</a>
                     </div>
                 @endforelse
             </div>
@@ -118,15 +118,15 @@
     </div>
 </div>
 
-<div class="mt-8 bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-gray-100 dark:border-slate-700 p-6 transition-colors duration-200">
-    <div class="flex justify-between items-center border-b border-gray-100 dark:border-slate-700 pb-4 mb-4">
+<div class="mt-8 bg-white dark:bg-[#0f1726] rounded-xl shadow-sm border border-gray-100 dark:border-slate-800 p-6 transition-colors duration-200">
+    <div class="flex justify-between items-center border-b border-gray-100 dark:border-slate-800 pb-4 mb-4">
         <h2 class="text-xl font-bold text-gray-800 dark:text-slate-100">Recent Buyer Checkouts</h2>
         <a href="{{ route('seller.deliveries.index') }}" class="text-sm font-medium text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300">View deliveries</a>
     </div>
 
     <div class="space-y-3">
         @forelse($recentCheckouts as $checkout)
-            <div class="rounded-lg border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 p-4">
+            <div class="rounded-lg border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-[#18243a] p-4">
                 <div class="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
                     <div>
                         <p class="text-sm font-semibold text-gray-900 dark:text-slate-100">{{ $checkout->product->name ?? 'Unknown Product' }}</p>
@@ -146,20 +146,20 @@
     </div>
 </div>
 
-<div class="mt-8 bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-gray-100 dark:border-slate-700 p-6 transition-colors duration-200">
-    <div class="flex justify-between items-center border-b border-gray-100 dark:border-slate-700 pb-4 mb-4">
+<div class="mt-8 bg-white dark:bg-[#0f1726] rounded-xl shadow-sm border border-gray-100 dark:border-slate-800 p-6 transition-colors duration-200">
+    <div class="flex justify-between items-center border-b border-gray-100 dark:border-slate-800 pb-4 mb-4">
         <h2 class="text-xl font-bold text-gray-800 dark:text-slate-100">Latest Seller Products</h2>
         <a href="{{ route('seller.products.index') }}" class="text-sm font-medium text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300">Manage all</a>
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         @forelse($recentProducts as $product)
-            <div class="rounded-xl border border-gray-100 dark:border-slate-700 overflow-hidden bg-gray-50 dark:bg-slate-800">
-                <div class="h-44 bg-gray-100 dark:bg-slate-700">
+            <div class="rounded-xl border border-gray-100 dark:border-slate-800 overflow-hidden bg-gray-50 dark:bg-[#18243a]">
+                <div class="h-44 bg-gray-100 dark:bg-[#0f1726]">
                     @if($product->images->count() > 0)
                         <img src="{{ asset('storage/' . $product->images->first()->image_path) }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
                     @else
-                        <div class="w-full h-full flex items-center justify-center text-gray-400 dark:text-slate-500">
+                        <div class="w-full h-full flex items-center justify-center text-gray-400 dark:text-slate-400">
                             <svg class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                             </svg>
@@ -175,7 +175,7 @@
                 </div>
             </div>
         @empty
-            <div class="col-span-full py-8 text-center text-gray-500 dark:text-slate-300 bg-gray-50 dark:bg-slate-800 rounded-lg">
+            <div class="col-span-full py-8 text-center text-gray-500 dark:text-slate-300 bg-gray-50 dark:bg-[#18243a] rounded-lg">
                 <p>You haven't added any products yet.</p>
             </div>
         @endforelse

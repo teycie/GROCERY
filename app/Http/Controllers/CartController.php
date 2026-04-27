@@ -43,13 +43,7 @@ class CartController extends Controller
             ];
         }
 
-        $recentTrackings = Delivery::where('user_id', Auth::id())
-            ->with(['product', 'seller'])
-            ->latest()
-            ->take(10)
-            ->get();
-
-        return view('cart.index', compact('items', 'total', 'recentTrackings'));
+        return view('cart.index', compact('items', 'total'));
     }
 
     public function add(Product $product)

@@ -5,7 +5,10 @@
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <div class="mb-8 flex flex-col md:flex-row items-center justify-between">
-        <h1 class="text-3xl font-extrabold text-gray-900 dark:text-slate-100">Your Shopping Cart</h1>
+        <div>
+            <h1 class="text-3xl font-extrabold text-gray-900 dark:text-slate-100">Your Shopping Cart</h1>
+            <a href="{{ route('buyer.purchases.index') }}" class="mt-2 inline-block text-sm font-semibold text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300 transition">Track your purchases</a>
+        </div>
         <a href="{{ route('products.index') }}" class="mt-4 md:mt-0 text-green-600 dark:text-green-400 font-semibold hover:text-green-700 dark:hover:text-green-300 flex items-center transition">
             <svg class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -149,54 +152,6 @@
         </form>
     @endif
 
-    <div id="buyer-tracking" class="mt-10 bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden">
-        <div class="p-6 border-b border-gray-100 dark:border-slate-800">
-            <h2 class="text-xl font-bold text-gray-900 dark:text-slate-100">Track Your Purchases</h2>
-            <p class="text-sm text-gray-500 dark:text-slate-300 mt-1">See if sellers approved your pending orders and monitor every status update.</p>
-        </div>
-
-        <div class="p-6 space-y-4">
-            @forelse(($recentTrackings ?? collect()) as $tracking)
-                @php
-                    $status = $tracking->tracking_status;
-                    $fulfillment = $tracking->fulfillment_type ?? 'delivery';
-                    $statusClass = 'bg-gray-100 text-gray-700 dark:bg-slate-800 dark:text-slate-200';
-
-                    if (in_array($status, ['approved'], true)) {
-                        $statusClass = 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300';
-                    } elseif (in_array($status, ['processing', 'preparing'], true)) {
-                        $statusClass = 'bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300';
-                    } elseif (in_array($status, ['shipped', 'ready'], true)) {
-                        $statusClass = 'bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300';
-                    } elseif (in_array($status, ['out_for_delivery', 'ready_to_pickup'], true)) {
-                        $statusClass = 'bg-purple-100 text-purple-800 dark:bg-purple-900/40 dark:text-purple-300';
-                    } elseif (in_array($status, ['delivered', 'picked_up'], true)) {
-                        $statusClass = 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300';
-                    } elseif ($status === 'cancelled') {
-                        $statusClass = 'bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-300';
-                    }
-                @endphp
-
-                <div class="rounded-lg border border-gray-100 dark:border-slate-700 bg-gray-50 dark:bg-slate-800/40 p-4">
-                    <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-                        <div>
-                            <p class="text-sm font-bold text-gray-900 dark:text-slate-100">{{ $tracking->product->name ?? 'Unknown Product' }}</p>
-                            <p class="text-xs text-gray-500 dark:text-slate-400 mt-1">Order {{ $tracking->order_id }} • Seller {{ $tracking->seller->name ?? 'Unknown' }}</p>
-                            <p class="text-xs text-gray-500 dark:text-slate-400 mt-1">{{ ucfirst($fulfillment) }} • Qty {{ $tracking->quantity }}</p>
-                        </div>
-                        <div class="text-left md:text-right">
-                            <span class="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold {{ $statusClass }}">{{ str_replace('_', ' ', ucfirst($status)) }}</span>
-                            <p class="text-xs text-gray-500 dark:text-slate-400 mt-2">{{ $tracking->created_at->format('M d, Y h:i A') }}</p>
-                        </div>
-                    </div>
-                </div>
-            @empty
-                <div class="text-center py-8 text-gray-500 dark:text-slate-300">
-                    No checkouts to track yet.
-                </div>
-            @endforelse
-        </div>
-    </div>
 </div>
 
 <script>

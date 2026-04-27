@@ -25,6 +25,8 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
+        $search = trim((string) $request->input('search', ''));
+
         $query = Product::with(['images', 'user'])
             ->whereHas('user', function ($userQuery) {
                 $userQuery->whereIn('role', ['seller', 'admin']);
@@ -35,10 +37,17 @@ class ProductController extends Controller
             $query->where('category', $request->category);
         }
 
-        $products = $query->paginate(8);
+        if ($search !== '') {
+            $query->where(function ($searchQuery) use ($search) {
+                $searchQuery->where('name', 'like', '%' . $search . '%')
+                    ->orWhere('category', 'like', '%' . $search . '%');
+            });
+        }
+
+        $products = $query->paginate(8)->withQueryString();
         $categories = $this->categories;
 
-        return view('products.index', compact('products', 'categories'));
+        return view('products.index', compact('products', 'categories', 'search'));
     }
 
     public function show(Product $product)

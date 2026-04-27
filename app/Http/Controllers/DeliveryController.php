@@ -10,6 +10,29 @@ use Illuminate\Validation\Rule;
 
 class DeliveryController extends Controller
 {
+    public function buyerPurchases()
+    {
+        $purchases = Delivery::where('user_id', Auth::id())
+            ->with(['product.images'])
+            ->orderBy('created_at', 'desc')
+            ->paginate(12);
+
+        return view('buyer.purchases.index', compact('purchases'));
+    }
+
+    public function buyerPurchaseDetails(Delivery $delivery)
+    {
+        if ((int) $delivery->user_id !== (int) Auth::id()) {
+            abort(403, 'You are not allowed to view this purchase.');
+        }
+
+        $delivery->load(['product.images']);
+
+        return view('buyer.purchases.show', [
+            'purchase' => $delivery,
+        ]);
+    }
+
     public function index()
     {
         $buyersSummary = Delivery::with('user:id,name,username')

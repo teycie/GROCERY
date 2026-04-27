@@ -56,6 +56,9 @@ Route::middleware(['auth', 'role:buyer'])->group(function () {
     Route::post('/cart/remove-selected', [CartController::class, 'removeSelected'])->name('cart.remove-selected');
     Route::get('/checkout', [CartController::class, 'showCheckout'])->name('cart.checkout.page');
     Route::post('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+
+    Route::get('/purchases', [DeliveryController::class, 'buyerPurchases'])->name('buyer.purchases.index');
+    Route::get('/purchases/{delivery}', [DeliveryController::class, 'buyerPurchaseDetails'])->name('buyer.purchases.show');
 });
 
 Route::prefix('seller')->middleware(['auth', 'role:seller,admin'])->group(function () {
