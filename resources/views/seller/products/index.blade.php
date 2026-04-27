@@ -68,13 +68,41 @@
     </div>
 
     <div class="w-full lg:w-[78%]">
+        <div class="mb-4 rounded-xl bg-white dark:bg-slate-900 shadow-sm border border-gray-100 dark:border-slate-800 p-4">
+            <form action="{{ route('seller.products.index') }}" method="GET" class="flex flex-col lg:flex-row gap-3 lg:items-center">
+                @if(request('category'))
+                    <input type="hidden" name="category" value="{{ request('category') }}">
+                @endif
+                <div class="flex-1">
+                    <label for="search" class="block text-sm font-semibold text-gray-700 dark:text-slate-200 mb-2">Search Products</label>
+                    <input
+                        id="search"
+                        name="search"
+                        type="search"
+                        value="{{ $search ?? '' }}"
+                        placeholder="Search by product name or category"
+                        class="w-full rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-[#18243a] text-gray-900 dark:text-slate-100 px-4 py-3 text-sm shadow-sm focus:border-green-500 focus:ring-green-500"
+                    >
+                </div>
+                <div class="flex gap-3 pt-1 lg:pt-7">
+                    <button type="submit" class="inline-flex items-center justify-center rounded-xl bg-green-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-green-700">
+                        Search
+                    </button>
+                    @if(!empty($search) || request('category'))
+                        <a href="{{ route('seller.products.index') }}" class="inline-flex items-center justify-center rounded-xl border border-slate-300 dark:border-slate-700 px-5 py-3 text-sm font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-gray-50 dark:hover:bg-[#111a2b]">
+                            Clear
+                        </a>
+                    @endif
+                </div>
+            </form>
+        </div>
+
         <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
             <div class="overflow-x-auto">
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
                             <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Product</th>
-                            <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Posted By</th>
                             <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Category</th>
                             <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Price</th>
                             <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Stock</th>
@@ -99,9 +127,6 @@
                                             <div class="text-sm font-medium text-gray-900">{{ $product->name }}</div>
                                         </div>
                                     </div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                                    {{ $product->user->name ?? 'Unknown Seller' }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                                     {{ $product->category }}

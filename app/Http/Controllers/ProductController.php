@@ -63,6 +63,8 @@ class ProductController extends Controller
 
     public function sellerIndex(Request $request)
     {
+        $search = trim((string) $request->input('search', ''));
+
         $query = Product::with(['images', 'user'])
             ->whereHas('user', function ($query) {
                 $query->whereIn('role', ['seller', 'admin']);
@@ -71,6 +73,13 @@ class ProductController extends Controller
 
         if ($request->filled('category')) {
             $query->where('category', $request->category);
+        }
+
+        if ($search !== '') {
+            $query->where(function ($searchQuery) use ($search) {
+                $searchQuery->where('name', 'like', '%' . $search . '%')
+                    ->orWhere('category', 'like', '%' . $search . '%');
+            });
         }
 
         $products = $query->paginate(10)->withQueryString();
@@ -86,7 +95,7 @@ class ProductController extends Controller
 
         $selectedCategory = $request->category;
 
-        return view('seller.products.index', compact('products', 'categories', 'categoryCounts', 'selectedCategory'));
+        return view('seller.products.index', compact('products', 'categories', 'categoryCounts', 'selectedCategory', 'search'));
     }
 
     public function create()
