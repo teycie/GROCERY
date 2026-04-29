@@ -59,6 +59,11 @@ Route::middleware(['auth', 'role:buyer'])->group(function () {
 
     Route::get('/purchases', [DeliveryController::class, 'buyerPurchases'])->name('buyer.purchases.index');
     Route::get('/purchases/{delivery}', [DeliveryController::class, 'buyerPurchaseDetails'])->name('buyer.purchases.show');
+
+    // Notifications for buyers
+    Route::get('/notifications', [\App\Http\Controllers\NotificationController::class, 'index'])->name('notifications.index');
+    Route::post('/notifications/{id}/read', [\App\Http\Controllers\NotificationController::class, 'markAsRead'])->name('notifications.read');
+    Route::post('/notifications/read-all', [\App\Http\Controllers\NotificationController::class, 'markAllRead'])->name('notifications.readAll');
 });
 
 Route::prefix('seller')->middleware(['auth', 'role:seller,admin'])->group(function () {
