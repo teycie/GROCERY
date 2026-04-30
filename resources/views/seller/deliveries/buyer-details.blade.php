@@ -93,7 +93,7 @@
                         </div>
                         <p class="text-sm text-gray-600 dark:text-slate-300"><span class="font-semibold text-gray-800 dark:text-slate-100">Address:</span> {{ $delivery->address ?? 'No delivery address provided' }}</p>
                         @if($delivery->notes)
-                            <p class="text-sm text-gray-600 dark:text-slate-300"><span class="font-semibold text-gray-800 dark:text-slate-100">Notes:</span> {{ $delivery->notes }}</p>
+                            <div class="text-sm text-gray-600 dark:text-slate-300"><span class="font-semibold text-gray-800 dark:text-slate-100">Notes:</span> <div class="mt-1">{!! nl2br(e($delivery->notes)) !!}</div></div>
                         @endif
                     </div>
 
@@ -111,7 +111,8 @@
                             @endforeach
                         </div>
 
-                        <form action="{{ route('seller.deliveries.update-status', $delivery) }}" method="POST" class="mt-4 grid gap-3 md:grid-cols-3">
+                        <!-- Status & Notes Form -->
+                        <form action="{{ route('seller.deliveries.update-status', $delivery) }}" method="POST" class="mt-4 grid gap-3 md:grid-cols-3 border-b border-gray-100 dark:border-slate-700 pb-4">
                             @csrf
                             @method('PUT')
                             <div class="md:col-span-1">
@@ -124,12 +125,47 @@
                             </div>
                             <div class="md:col-span-1">
                                 <label class="block text-xs font-semibold uppercase tracking-wide text-gray-600 dark:text-slate-300 mb-1">Seller Note</label>
-                                <input type="text" name="notes" value="{{ $delivery->notes }}" maxlength="500" class="w-full rounded-lg border-gray-300 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100 text-sm" placeholder="Optional note">
+                                <textarea name="notes" rows="1" maxlength="500" class="w-full rounded-lg border-gray-300 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100 text-sm" placeholder="Optional note">{{ $delivery->notes }}</textarea>
                             </div>
                             <div class="md:col-span-1 flex items-end">
                                 <button type="submit" class="w-full rounded-lg bg-green-600 hover:bg-green-700 text-white font-semibold py-2.5 px-4 transition">Save Status</button>
                             </div>
                         </form>
+
+                        <!-- Rider Assignment Form / Info -->
+                        @if(!$isPickup && in_array($currentStatus, ['approved', 'preparing', 'rider_assigned', 'picked_up', 'on_delivery', 'delivered']))
+                            <div class="mt-4 bg-gray-50 dark:bg-slate-800/50 p-3 rounded-lg border border-gray-100 dark:border-slate-700">
+                                @if($delivery->rider_id)
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <p class="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-slate-400">Assigned Rider</p>
+                                            <p class="text-sm font-bold text-gray-900 dark:text-slate-100">{{ optional($delivery->rider)->name }}</p>
+                                        </div>
+                                        <div class="text-right">
+                                            <span class="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium bg-indigo-100 text-indigo-800 dark:bg-indigo-900/40 dark:text-indigo-300">
+                                                Assigned
+                                            </span>
+                                        </div>
+                                    </div>
+                                @else
+                                    <form action="{{ route('seller.deliveries.assign-rider', $delivery) }}" method="POST" class="grid gap-3 md:grid-cols-3">
+                                        @csrf
+                                        <div class="md:col-span-2">
+                                            <label class="block text-xs font-semibold uppercase tracking-wide text-gray-600 dark:text-slate-300 mb-1">Assign Rider</label>
+                                            <select name="rider_id" required class="w-full rounded-lg border-gray-300 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100 text-sm">
+                                                <option value="">-- Select Rider --</option>
+                                                @foreach($availableRiders as $availableRider)
+                                                    <option value="{{ $availableRider->id }}">{{ $availableRider->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="md:col-span-1 flex items-end">
+                                            <button type="submit" class="w-full rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 px-4 transition">Assign</button>
+                                        </div>
+                                    </form>
+                                @endif
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

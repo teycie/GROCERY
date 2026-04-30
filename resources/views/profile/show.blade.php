@@ -36,10 +36,10 @@
                             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
                         </a>
 
-                        <button id="open-system-settings" class="w-full flex items-center justify-between rounded-xl border border-green-200 dark:border-green-700 bg-green-50 dark:bg-green-900/20 px-5 py-3 text-left text-sm font-semibold text-green-800 dark:text-green-300 hover:border-green-500 hover:text-green-700 dark:hover:text-green-400 transition">
+                        <a href="{{ route('profile.system-settings') }}" class="w-full flex items-center justify-between rounded-xl border border-green-200 dark:border-green-700 bg-green-50 dark:bg-green-900/20 px-5 py-3 text-left text-sm font-semibold text-green-800 dark:text-green-300 hover:border-green-500 hover:text-green-700 dark:hover:text-green-400 transition">
                             <span>System Settings</span>
                             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
-                        </button>
+                        </a>
                     </div>
                 </aside>
 
@@ -49,21 +49,7 @@
                     </div>
 
                     <div class="space-y-6 max-w-xl">
-                        <!-- Appearance Setting (Hidden by default, shown when System Settings is clicked) -->
-                        <div id="appearance-section" class="hidden p-4 border border-gray-100 dark:border-slate-700 rounded-lg bg-gray-50 dark:bg-slate-800">
-                            <div class="flex items-center justify-between">
-                                <div>
-                                    <p class="text-sm font-semibold text-gray-900 dark:text-slate-100">Appearance</p>
-                                    <p class="text-xs text-gray-600 dark:text-slate-400 mt-1">Toggle between light and dark mode</p>
-                                </div>
-                                <button id="theme-toggle" type="button" class="group inline-flex items-center gap-3 rounded-full border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-700 px-3 py-2 shadow-sm hover:border-green-500 dark:hover:border-green-500 transition-all" aria-pressed="false">
-                                    <span id="theme-toggle-label" class="text-xs font-bold uppercase tracking-wide text-gray-700 dark:text-slate-200">Light Mode</span>
-                                    <span class="relative inline-flex h-6 w-11 items-center rounded-full bg-gray-300 dark:bg-green-600 transition-colors">
-                                        <span id="theme-toggle-knob" class="inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform translate-x-1"></span>
-                                    </span>
-                                </button>
-                            </div>
-                        </div>
+                        <!-- Profile details list continues here -->
 
                         <div class="flex items-start">
                             <div class="flex-shrink-0 h-6 w-6 flex items-center justify-center text-gray-400 dark:text-slate-500">

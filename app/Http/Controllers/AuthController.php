@@ -22,6 +22,7 @@ class AuthController extends Controller
             'email' => 'required|email|unique:users',
             'username' => 'required|string|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
+            'role' => 'required|in:buyer,seller,rider',
         ]);
 
         // New registrants are always buyers
@@ -32,7 +33,7 @@ class AuthController extends Controller
             'email' => $validated['email'],
             'username' => $validated['username'],
             'password' => Hash::make($validated['password']),
-            'role' => 'buyer',
+            'role' => $validated['role'],
         ]);
 
         Auth::login($user);
@@ -81,8 +82,12 @@ class AuthController extends Controller
 
     private function redirectByRole(string $role)
     {
-        if ($role === 'seller') {
+        if ($role === 'seller' || $role === 'admin') {
             return redirect()->route('seller.dashboard');
+        }
+
+        if ($role === 'rider') {
+            return redirect()->route('rider.dashboard');
         }
 
         return redirect()->route('buyer.dashboard');

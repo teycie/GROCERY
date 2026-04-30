@@ -6,8 +6,10 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RiderController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -42,9 +44,16 @@ Route::middleware('auth')->group(function () {
     Route::put('/profile', [ProfileController::class, 'updateProfile'])->name('profile.update');
     Route::get('/profile/account-settings', [ProfileController::class, 'settings'])->name('profile.settings');
     Route::put('/profile/account-settings', [ProfileController::class, 'updateSettings'])->name('profile.settings.update');
+    Route::get('/profile/system-settings', [ProfileController::class, 'systemSettings'])->name('profile.system-settings');
 
     Route::get('/products', [ProductController::class, 'index'])->name('products.index');
     Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
+
+    // Notifications (shared by all roles)
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+    Route::post('/notifications/{id}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');
+    Route::post('/notifications/read-all', [NotificationController::class, 'markAllRead'])->name('notifications.readAll');
+    Route::get('/notifications/poll', [NotificationController::class, 'poll'])->name('notifications.poll');
 });
 
 Route::middleware(['auth', 'role:buyer'])->group(function () {
@@ -59,11 +68,6 @@ Route::middleware(['auth', 'role:buyer'])->group(function () {
 
     Route::get('/purchases', [DeliveryController::class, 'buyerPurchases'])->name('buyer.purchases.index');
     Route::get('/purchases/{delivery}', [DeliveryController::class, 'buyerPurchaseDetails'])->name('buyer.purchases.show');
-
-    // Notifications for buyers
-    Route::get('/notifications', [\App\Http\Controllers\NotificationController::class, 'index'])->name('notifications.index');
-    Route::post('/notifications/{id}/read', [\App\Http\Controllers\NotificationController::class, 'markAsRead'])->name('notifications.read');
-    Route::post('/notifications/read-all', [\App\Http\Controllers\NotificationController::class, 'markAllRead'])->name('notifications.readAll');
 });
 
 Route::prefix('seller')->middleware(['auth', 'role:seller,admin'])->group(function () {
@@ -72,6 +76,7 @@ Route::prefix('seller')->middleware(['auth', 'role:seller,admin'])->group(functi
     Route::get('/deliveries', [DeliveryController::class, 'index'])->name('seller.deliveries.index');
     Route::get('/deliveries/buyer/{buyer}', [DeliveryController::class, 'buyerDetails'])->name('seller.deliveries.buyer-details');
     Route::put('/deliveries/{delivery}/status', [DeliveryController::class, 'updateStatus'])->name('seller.deliveries.update-status');
+    Route::post('/deliveries/{delivery}/assign-rider', [DeliveryController::class, 'assignRider'])->name('seller.deliveries.assign-rider');
 
     Route::get('/products', [ProductController::class, 'sellerIndex'])->name('seller.products.index');
     Route::get('/products/create', [ProductController::class, 'create'])->name('seller.products.create');
@@ -82,4 +87,14 @@ Route::prefix('seller')->middleware(['auth', 'role:seller,admin'])->group(functi
 
     Route::get('/announcements/create', [AnnouncementController::class, 'create'])->name('seller.announcements.create');
     Route::post('/announcements', [AnnouncementController::class, 'store'])->name('seller.announcements.store');
+});
+
+// Rider routes
+Route::prefix('rider')->middleware(['auth', 'role:rider'])->group(function () {
+    Route::get('/dashboard', [RiderController::class, 'dashboard'])->name('rider.dashboard');
+    Route::get('/deliveries', [RiderController::class, 'deliveries'])->name('rider.deliveries');
+    Route::get('/deliveries/{delivery}', [RiderController::class, 'showDelivery'])->name('rider.deliveries.show');
+    Route::post('/deliveries/{delivery}/pickup', [RiderController::class, 'pickUp'])->name('rider.deliveries.pickup');
+    Route::post('/deliveries/{delivery}/on-the-way', [RiderController::class, 'onTheWay'])->name('rider.deliveries.on-the-way');
+    Route::post('/deliveries/{delivery}/delivered', [RiderController::class, 'delivered'])->name('rider.deliveries.delivered');
 });

@@ -116,6 +116,20 @@
                         @enderror
                     </div>
                 </div>
+                
+                <div class="mt-4">
+                    <label for="buyer_notes" class="block text-xs sm:text-sm font-semibold uppercase tracking-wide text-gray-700 dark:text-slate-200 mb-2">Order Notes (Optional)</label>
+                    <textarea
+                        id="buyer_notes"
+                        name="buyer_notes"
+                        rows="2"
+                        placeholder="e.g. Please handle with care. / Call me before delivery. / Leave at the gate."
+                        class="w-full rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-[#18243a] text-gray-900 dark:text-slate-100 shadow-sm focus:border-green-500 focus:ring-green-500 py-3 px-4 text-sm"
+                    >{{ old('buyer_notes') }}</textarea>
+                    @error('buyer_notes')
+                        <span class="text-red-500 text-xs font-bold block mt-1">{{ $message }}</span>
+                    @enderror
+                </div>
             </div>
         </div>
 

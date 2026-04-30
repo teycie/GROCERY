@@ -66,6 +66,15 @@
                     @error('username')<span class="text-red-500 text-xs mt-1">{{ $message }}</span>@enderror
                 </div>
                 <div>
+                    <label for="role" class="block text-sm font-medium text-gray-700 dark:text-slate-300">Register As</label>
+                    <select id="role" name="role" required class="appearance-none rounded-lg relative block w-full px-3 py-3 border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-900 dark:text-slate-100 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm mt-1">
+                        <option value="buyer" {{ old('role') === 'buyer' ? 'selected' : '' }}>Buyer</option>
+                        <option value="seller" {{ old('role') === 'seller' ? 'selected' : '' }}>Seller</option>
+                        <option value="rider" {{ old('role') === 'rider' ? 'selected' : '' }}>Rider</option>
+                    </select>
+                    @error('role')<span class="text-red-500 text-xs mt-1">{{ $message }}</span>@enderror
+                </div>
+                <div>
                     <label for="password" class="block text-sm font-medium text-gray-700 dark:text-slate-300">Password</label>
                     <input id="password" name="password" type="password" autocomplete="new-password" required class="appearance-none rounded-lg relative block w-full px-3 py-3 border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-900 dark:text-slate-100 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm mt-1">
                     @error('password')<span class="text-red-500 text-xs mt-1">{{ $message }}</span>@enderror

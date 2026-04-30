@@ -25,6 +25,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'phone',
     ];
 
     /**
@@ -60,5 +61,21 @@ class User extends Authenticatable
     public function cart()
     {
         return $this->hasOne(Cart::class);
+    }
+
+    /**
+     * Deliveries assigned to this user as rider.
+     */
+    public function riderDeliveries()
+    {
+        return $this->hasMany(Delivery::class, 'rider_id');
+    }
+
+    /**
+     * Delivery assignments for this rider.
+     */
+    public function deliveryAssignments()
+    {
+        return $this->hasMany(DeliveryAssignment::class, 'rider_id');
     }
 }

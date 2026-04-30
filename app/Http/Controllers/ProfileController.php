@@ -36,6 +36,15 @@ class ProfileController extends Controller
     }
 
     /**
+     * Show system settings form.
+     */
+    public function systemSettings()
+    {
+        $user = Auth::user();
+        return view('profile.system-settings', compact('user'));
+    }
+
+    /**
      * Update the user's profile details.
      */
     public function updateProfile(Request $request)

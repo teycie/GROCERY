@@ -9,13 +9,14 @@ class Delivery extends Model
 {
     use HasFactory;
 
-    public const DELIVERY_STATUSES = ['pending', 'approved', 'processing', 'shipped', 'out_for_delivery', 'delivered', 'cancelled'];
+    public const DELIVERY_STATUSES = ['pending', 'approved', 'preparing', 'rider_assigned', 'picked_up', 'on_delivery', 'delivered', 'cancelled'];
     public const PICKUP_STATUSES = ['pending', 'approved', 'preparing', 'ready', 'ready_to_pickup', 'picked_up', 'cancelled'];
 
     protected $fillable = [
         'order_id',
         'user_id',
         'seller_id',
+        'rider_id',
         'product_id',
         'quantity',
         'fulfillment_type',
@@ -25,10 +26,13 @@ class Delivery extends Model
         'address',
         'estimated_date',
         'delivered_date',
+        'rider_assigned_at',
+        'picked_up_at',
+        'on_delivery_at',
         'notes',
     ];
 
-    protected $dates = ['estimated_date', 'delivered_date'];
+    protected $dates = ['estimated_date', 'delivered_date', 'rider_assigned_at', 'picked_up_at', 'on_delivery_at'];
 
     public static function statusesFor(?string $fulfillmentType): array
     {
@@ -50,19 +54,30 @@ class Delivery extends Model
         return $this->belongsTo(User::class, 'seller_id');
     }
 
+    public function rider()
+    {
+        return $this->belongsTo(User::class, 'rider_id');
+    }
+
     public function product()
     {
         return $this->belongsTo(Product::class);
+    }
+
+    public function assignments()
+    {
+        return $this->hasMany(DeliveryAssignment::class);
     }
 
     public function getProgressPercentageAttribute()
     {
         $deliveryProgress = [
             'pending' => 0,
-            'approved' => 15,
-            'processing' => 35,
-            'shipped' => 60,
-            'out_for_delivery' => 85,
+            'approved' => 14,
+            'preparing' => 28,
+            'rider_assigned' => 42,
+            'picked_up' => 57,
+            'on_delivery' => 78,
             'delivered' => 100,
             'cancelled' => 0,
         ];
@@ -93,14 +108,18 @@ class Delivery extends Model
             case 'processing':
             case 'preparing':
                 return 'yellow';
+            case 'rider_assigned':
+                return 'indigo';
             case 'shipped':
             case 'ready':
                 return 'blue';
+            case 'picked_up':
+                return 'cyan';
+            case 'on_delivery':
             case 'out_for_delivery':
             case 'ready_to_pickup':
                 return 'purple';
             case 'delivered':
-            case 'picked_up':
                 return 'green';
             case 'cancelled':
                 return 'red';

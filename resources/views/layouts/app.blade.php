@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'FreshMart - Online Grocery')</title>
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -68,6 +69,28 @@
             border-color: #1f7f3a !important;
             color: #ffffff !important;
         }
+
+        /* Notification dropdown animation */
+        .notif-dropdown {
+            transform: translateY(-8px);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.2s ease;
+        }
+        .notif-dropdown.show {
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Pulse animation for notification badge */
+        @keyframes notif-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+        .notif-badge-pulse {
+            animation: notif-pulse 2s ease-in-out infinite;
+        }
     </style>
     <!-- Dark Mode Initializer -->
     <script>
@@ -107,9 +130,32 @@
                             <a href="{{ route('seller.inventory.index') }}" class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-semibold transition">Inventory</a>
                             <a href="{{ route('seller.deliveries.index') }}" class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-semibold transition">Deliveries</a>
                             <a href="{{ route('seller.announcements.create') }}" class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-semibold transition">Post Announcement</a>
+                        @elseif(auth()->user()->role === 'rider')
+                            <a href="{{ route('rider.dashboard') }}" class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-semibold transition">Dashboard</a>
+                            <a href="{{ route('rider.deliveries', ['filter' => 'active']) }}" class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-semibold transition">My Deliveries</a>
+                            <a href="{{ route('rider.deliveries', ['filter' => 'history']) }}" class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-semibold transition">History</a>
                         @else
                             <a href="{{ route('dashboard') }}" class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-semibold transition">Dashboard</a>
                         @endif
+
+                        {{-- Notification Bell --}}
+                        <div class="relative" id="notif-wrapper">
+                            <button onclick="toggleNotifDropdown()" class="relative text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 transition p-1" title="Notifications">
+                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                                </svg>
+                                <span id="notif-count-badge" class="hidden absolute -top-1 -right-1 h-5 w-5 rounded-full bg-red-500 text-white text-xs font-bold flex items-center justify-center notif-badge-pulse">0</span>
+                            </button>
+                            <div id="notif-dropdown" class="notif-dropdown absolute right-0 mt-2 w-80 bg-white dark:bg-slate-800 rounded-xl shadow-2xl border border-gray-200 dark:border-slate-700 overflow-hidden z-50">
+                                <div class="px-4 py-3 border-b border-gray-100 dark:border-slate-700 flex items-center justify-between">
+                                    <h3 class="font-bold text-sm text-gray-800 dark:text-slate-100">Notifications</h3>
+                                    <a href="{{ route('notifications.index') }}" class="text-xs font-semibold text-green-600 hover:text-green-500">View All</a>
+                                </div>
+                                <div id="notif-list" class="max-h-72 overflow-y-auto divide-y divide-gray-50 dark:divide-slate-700">
+                                    <div class="px-4 py-6 text-center text-sm text-gray-400 dark:text-slate-500">No new notifications</div>
+                                </div>
+                            </div>
+                        </div>
 
                         <a href="{{ route('profile.show') }}" class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-semibold transition">Profile</a>
 
@@ -128,7 +174,7 @@
     </nav>
 
     <!-- Main Content Area -->
-    <main class="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8 {{ request()->routeIs('dashboard', 'buyer.dashboard', 'seller.dashboard') ? 'dark:bg-[#0b1020]' : '' }}">
+    <main class="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8 {{ request()->routeIs('dashboard', 'buyer.dashboard', 'seller.dashboard', 'rider.dashboard') ? 'dark:bg-[#0b1020]' : '' }}">
         <!-- Flash Messages -->
         @if(session('success'))
             <div class="bg-green-100 dark:bg-green-900 border border-green-400 dark:border-green-700 text-green-700 dark:text-green-400 px-4 py-3 rounded relative mb-6" role="alert">
@@ -206,5 +252,82 @@
     </footer>
 
     <script src="{{ asset('js/script.js') }}"></script>
+
+    {{-- Real-time Notification Polling --}}
+    @auth
+    <script>
+        // Notification dropdown toggle
+        function toggleNotifDropdown() {
+            const dropdown = document.getElementById('notif-dropdown');
+            dropdown.classList.toggle('show');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            const wrapper = document.getElementById('notif-wrapper');
+            if (wrapper && !wrapper.contains(e.target)) {
+                document.getElementById('notif-dropdown').classList.remove('show');
+            }
+        });
+
+        // Poll for notifications every 10 seconds
+        function pollNotifications() {
+            fetch('{{ route("notifications.poll") }}', {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json',
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                const badge = document.getElementById('notif-count-badge');
+                const list = document.getElementById('notif-list');
+
+                if (data.unread_count > 0) {
+                    badge.textContent = data.unread_count > 99 ? '99+' : data.unread_count;
+                    badge.classList.remove('hidden');
+                    badge.classList.add('flex');
+                } else {
+                    badge.classList.add('hidden');
+                    badge.classList.remove('flex');
+                }
+
+                if (data.notifications.length > 0) {
+                    let html = '';
+                    data.notifications.forEach(function(n) {
+                        const statusColors = {
+                            'approved': 'bg-emerald-500',
+                            'preparing': 'bg-amber-500',
+                            'rider_assigned': 'bg-indigo-500',
+                            'picked_up': 'bg-cyan-500',
+                            'on_delivery': 'bg-purple-500',
+                            'delivered': 'bg-green-500',
+                            'cancelled': 'bg-red-500',
+                        };
+                        const dotColor = statusColors[n.status] || 'bg-gray-400';
+
+                        html += '<form method="POST" action="/notifications/' + n.id + '/read" class="m-0 p-0 hover:bg-gray-50 dark:hover:bg-slate-700/50 transition">' +
+                            '<input type="hidden" name="_token" value="' + document.querySelector('meta[name="csrf-token"]').content + '">' +
+                            '<button type="submit" class="w-full text-left px-4 py-3">' +
+                            '<div class="flex items-start gap-3">' +
+                            '<div class="mt-1.5 h-2.5 w-2.5 rounded-full flex-shrink-0 ' + dotColor + '"></div>' +
+                            '<div class="flex-1 min-w-0">' +
+                            '<p class="text-sm text-gray-800 dark:text-slate-200 leading-snug">' + n.message + '</p>' +
+                            '<p class="text-xs text-gray-400 dark:text-slate-500 mt-1">' + n.time + '</p>' +
+                            '</div></div></button></form>';
+                    });
+                    list.innerHTML = html;
+                } else {
+                    list.innerHTML = '<div class="px-4 py-6 text-center text-sm text-gray-400 dark:text-slate-500">No new notifications</div>';
+                }
+            })
+            .catch(function() {});
+        }
+
+        // Initial poll + interval
+        pollNotifications();
+        setInterval(pollNotifications, 10000);
+    </script>
+    @endauth
 </body>
 </html>

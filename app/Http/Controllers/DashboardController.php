@@ -41,8 +41,14 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        if (Auth::user()->role === 'seller') {
+        $role = Auth::user()->role;
+
+        if ($role === 'seller' || $role === 'admin') {
             return redirect()->route('seller.dashboard');
+        }
+
+        if ($role === 'rider') {
+            return redirect()->route('rider.dashboard');
         }
 
         return redirect()->route('buyer.dashboard');

@@ -190,6 +190,7 @@ class CartController extends Controller
             'selected_items.*' => ['integer'],
             'quantities' => ['required', 'array'],
             'quantities.*' => ['required', 'integer', 'min:1'],
+            'buyer_notes' => ['nullable', 'string', 'max:1000'],
         ]);
 
         if ($validated['fulfillment_type'] === 'delivery' && $validated['payment_mode'] !== 'cod') {
@@ -290,6 +291,10 @@ class CartController extends Controller
                 $notes = 'Checkout by ' . $validated['first_name'] . ' ' . $validated['last_name']
                     . ' | Fulfillment: ' . ucfirst($fulfillmentType)
                     . ' | Payment: ' . strtoupper($paymentMode);
+                    
+                if (!empty($validated['buyer_notes'])) {
+                    $notes .= "\n\nBuyer Notes:\n" . $validated['buyer_notes'];
+                }
 
                 Delivery::create([
                     'order_id' => $orderReference . '-' . $lineNumber,
