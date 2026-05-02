@@ -112,23 +112,22 @@
                         </div>
 
                         <!-- Status & Notes Form -->
-                        <form action="{{ route('seller.deliveries.update-status', $delivery) }}" method="POST" class="mt-4 grid gap-3 md:grid-cols-3 border-b border-gray-100 dark:border-slate-700 pb-4">
+                        <form action="{{ route('seller.deliveries.update-status', $delivery) }}" method="POST" class="mt-4 border-b border-gray-100 dark:border-slate-700 pb-4">
                             @csrf
                             @method('PUT')
-                            <div class="md:col-span-1">
-                                <label class="block text-xs font-semibold uppercase tracking-wide text-gray-600 dark:text-slate-300 mb-1">Update Status</label>
-                                <select name="status" class="w-full rounded-lg border-gray-300 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100 text-sm">
-                                    @foreach($statusOptions as $value => $label)
-                                        <option value="{{ $value }}" {{ $currentStatus === $value ? 'selected' : '' }}>{{ $label }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="md:col-span-1">
+                            
+                            <div class="mb-3">
                                 <label class="block text-xs font-semibold uppercase tracking-wide text-gray-600 dark:text-slate-300 mb-1">Seller Note</label>
                                 <textarea name="notes" rows="1" maxlength="500" class="w-full rounded-lg border-gray-300 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100 text-sm" placeholder="Optional note">{{ $delivery->notes }}</textarea>
                             </div>
-                            <div class="md:col-span-1 flex items-end">
-                                <button type="submit" class="w-full rounded-lg bg-green-600 hover:bg-green-700 text-white font-semibold py-2.5 px-4 transition">Save Status</button>
+
+                            <label class="block text-xs font-semibold uppercase tracking-wide text-gray-600 dark:text-slate-300 mb-2">Update Status</label>
+                            <div class="flex flex-wrap gap-2">
+                                @foreach($statusOptions as $value => $label)
+                                    <button type="submit" name="status" value="{{ $value }}" class="rounded-lg px-3 py-1.5 text-sm font-semibold transition {{ $currentStatus === $value ? 'bg-green-600 text-white ring-2 ring-green-600 ring-offset-2 dark:ring-offset-slate-900' : 'bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700' }}">
+                                        {{ $label }}
+                                    </button>
+                                @endforeach
                             </div>
                         </form>
 

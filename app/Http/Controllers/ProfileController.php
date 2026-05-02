@@ -53,9 +53,13 @@ class ProfileController extends Controller
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',
+            'address' => 'nullable|string|max:1000',
         ]);
 
         $user->name = $validated['name'];
+        if (array_key_exists('address', $validated)) {
+            $user->address = $validated['address'];
+        }
         $user->save();
 
         return redirect()->route('profile.show')->with('success', 'Profile updated successfully.');

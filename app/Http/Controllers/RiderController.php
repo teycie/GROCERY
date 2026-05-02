@@ -198,4 +198,16 @@ class RiderController extends Controller
 
         return back()->with('success', 'Order marked as delivered. Great job!');
     }
+
+    /**
+     * Toggle rider availability status.
+     */
+    public function toggleAvailability()
+    {
+        $rider = Auth::user();
+        $rider->update(['is_rider_available' => !$rider->is_rider_available]);
+        
+        $status = $rider->is_rider_available ? 'Available' : 'Busy';
+        return back()->with('success', "Your status is now {$status}.");
+    }
 }

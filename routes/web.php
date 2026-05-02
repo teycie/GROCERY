@@ -92,6 +92,7 @@ Route::prefix('seller')->middleware(['auth', 'role:seller,admin'])->group(functi
 // Rider routes
 Route::prefix('rider')->middleware(['auth', 'role:rider'])->group(function () {
     Route::get('/dashboard', [RiderController::class, 'dashboard'])->name('rider.dashboard');
+    Route::post('/availability/toggle', [RiderController::class, 'toggleAvailability'])->name('rider.availability.toggle');
     Route::get('/deliveries', [RiderController::class, 'deliveries'])->name('rider.deliveries');
     Route::get('/deliveries/{delivery}', [RiderController::class, 'showDelivery'])->name('rider.deliveries.show');
     Route::post('/deliveries/{delivery}/pickup', [RiderController::class, 'pickUp'])->name('rider.deliveries.pickup');

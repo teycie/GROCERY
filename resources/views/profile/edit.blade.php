@@ -24,6 +24,14 @@
                 @enderror
             </div>
 
+            <div>
+                <label class="block text-sm font-bold text-gray-700 dark:text-slate-200 mb-1">Address</label>
+                <textarea name="address" rows="3" class="w-full rounded-lg border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-900 dark:text-slate-100 focus:border-green-500 focus:ring focus:ring-green-200 dark:focus:ring-green-500/20 focus:ring-opacity-50 py-3 px-4 transition">{{ old('address', $user->address) }}</textarea>
+                @error('address')
+                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                @enderror
+            </div>
+
             <div class="flex justify-end gap-3 pt-6 border-t border-gray-100 dark:border-slate-800 mt-6">
                 <a href="{{ route('profile.show') }}" class="px-6 py-3 border border-gray-300 dark:border-slate-600 text-gray-700 dark:text-slate-200 bg-white dark:bg-slate-900 rounded-lg font-bold hover:bg-gray-50 dark:hover:bg-slate-800 transition shadow-sm">Cancel</a>
                 <button type="submit" class="px-6 py-3 border border-transparent bg-green-600 text-white rounded-lg font-bold hover:bg-green-700 transition shadow-md shadow-green-600/30">Save Changes</button>

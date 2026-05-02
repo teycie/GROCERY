@@ -3,9 +3,20 @@
 @section('title', 'Rider Dashboard - FreshMart')
 
 @section('content')
-<div class="mb-8">
-    <h1 class="text-3xl font-extrabold text-gray-900 dark:text-slate-100">Welcome, Rider {{ auth()->user()->first_name ?? auth()->user()->name }}!</h1>
-    <p class="mt-2 text-gray-600 dark:text-slate-300">Here is your delivery summary and active assignments.</p>
+<div class="mb-8 flex justify-between items-start">
+    <div>
+        <h1 class="text-3xl font-extrabold text-gray-900 dark:text-slate-100">Welcome, Rider {{ auth()->user()->first_name ?? auth()->user()->name }}!</h1>
+        <p class="mt-2 text-gray-600 dark:text-slate-300">Here is your delivery summary and active assignments.</p>
+    </div>
+    <div class="flex items-center bg-white p-3 rounded-xl shadow-sm border border-gray-100 dark:bg-slate-900 dark:border-slate-700">
+        <span class="mr-3 text-sm font-medium text-gray-700 dark:text-slate-300">Status: <span class="{{ auth()->user()->is_rider_available ? 'text-green-500' : 'text-red-500' }} font-bold">{{ auth()->user()->is_rider_available ? 'Available' : 'Busy' }}</span></span>
+        <form action="{{ route('rider.availability.toggle') }}" method="POST" class="m-0 flex items-center">
+            @csrf
+            <button type="submit" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 {{ auth()->user()->is_rider_available ? 'bg-green-500' : 'bg-gray-200 dark:bg-slate-700' }}" role="switch" aria-checked="{{ auth()->user()->is_rider_available ? 'true' : 'false' }}">
+                <span aria-hidden="true" class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out {{ auth()->user()->is_rider_available ? 'translate-x-5' : 'translate-x-0' }}"></span>
+            </button>
+        </form>
+    </div>
 </div>
 
 <div class="grid gap-6 md:grid-cols-4 mb-8">
@@ -73,10 +84,18 @@
                         <div class="space-y-2 text-sm">
                             <div class="flex items-start">
                                 <svg class="h-5 w-5 mr-2 text-gray-400 dark:text-slate-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
                                 </svg>
-                                <span class="text-gray-700 dark:text-slate-300 line-clamp-1">From: <span class="font-semibold">{{ optional($delivery->seller)->name }}</span></span>
+                                <span class="text-gray-700 dark:text-slate-300 line-clamp-1">Payment: <span class="font-semibold uppercase">{{ $delivery->payment_mode ?? '-' }}</span></span>
                             </div>
+                            @if(strtolower($delivery->payment_mode) === 'cod' || strtolower($delivery->payment_mode) === 'cash on delivery')
+                            <div class="flex items-start">
+                                <svg class="h-5 w-5 mr-2 text-red-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <span class="text-red-600 dark:text-red-400 font-bold line-clamp-1">Collect: ₱{{ number_format(optional($delivery->product)->price * $delivery->quantity, 2) }}</span>
+                            </div>
+                            @endif
                             <div class="flex items-start">
                                 <svg class="h-5 w-5 mr-2 text-green-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />

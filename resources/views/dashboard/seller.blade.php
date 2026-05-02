@@ -29,21 +29,17 @@
         <span class="text-3xl font-extrabold text-blue-600 dark:text-blue-400">{{ $totalCartItems ?? 0 }}</span>
     </div>
     <div class="bg-white dark:bg-[#0f1726] rounded-xl shadow-sm border border-gray-100 dark:border-slate-800 p-6 flex flex-col justify-center transition-colors duration-200">
-        <span class="text-sm font-medium text-gray-500 dark:text-slate-300 mb-1">Store Potential Revenue</span>
-        <span class="text-3xl font-extrabold text-green-600 dark:text-green-400">${{ number_format($potentialRevenue ?? 0, 2) }}</span>
-    </div>
-    <div class="bg-white dark:bg-[#0f1726] rounded-xl shadow-sm border border-gray-100 dark:border-slate-800 p-6 flex flex-col justify-center transition-colors duration-200">
         <span class="text-sm font-medium text-gray-500 dark:text-slate-300 mb-1">Total Store Buyers</span>
         <span class="text-3xl font-extrabold text-indigo-600 dark:text-indigo-400">{{ $totalBuyers }}</span>
     </div>
-</div>
-
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
     <div class="bg-white dark:bg-[#0f1726] rounded-xl shadow-sm border border-gray-100 dark:border-slate-800 p-6 flex flex-col justify-center transition-colors duration-200">
         <span class="text-sm font-medium text-gray-500 dark:text-slate-300 mb-1">Total Buyer Checkouts</span>
         <span class="text-3xl font-extrabold text-emerald-600 dark:text-emerald-400">{{ $totalCheckoutOrders ?? 0 }}</span>
     </div>
-    <div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-gray-100 dark:border-slate-700 p-6 flex flex-col justify-center transition-colors duration-200">
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+    <div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-gray-100 dark:border-slate-700 p-6 flex flex-col justify-center transition-colors duration-200 md:col-span-1">
         <span class="text-sm font-medium text-gray-500 dark:text-slate-300 mb-1">Pending Checkout Orders</span>
         <span class="text-3xl font-extrabold text-amber-600 dark:text-amber-400">{{ $pendingCheckoutOrders ?? 0 }}</span>
     </div>

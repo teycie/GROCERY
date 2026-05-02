@@ -62,7 +62,10 @@
                             <h3 class="text-lg font-bold text-gray-900 dark:text-slate-100 mb-1">{{ optional($delivery->product)->name }}</h3>
                             <div class="grid md:grid-cols-2 gap-4 text-sm text-gray-600 dark:text-slate-300 mt-3">
                                 <div>
-                                    <p><span class="font-semibold text-gray-800 dark:text-slate-200">From:</span> {{ optional($delivery->seller)->name }}</p>
+                                    <p><span class="font-semibold text-gray-800 dark:text-slate-200">Payment:</span> <span class="uppercase">{{ $delivery->payment_mode ?? '-' }}</span></p>
+                                    @if(strtolower($delivery->payment_mode) === 'cod' || strtolower($delivery->payment_mode) === 'cash on delivery')
+                                        <p class="mt-1"><span class="font-bold text-red-600 dark:text-red-400">Collect: ₱{{ number_format(optional($delivery->product)->price * $delivery->quantity, 2) }}</span></p>
+                                    @endif
                                     <p class="mt-1"><span class="font-semibold text-gray-800 dark:text-slate-200">Buyer:</span> {{ optional($delivery->user)->name }}</p>
                                 </div>
                                 <div>

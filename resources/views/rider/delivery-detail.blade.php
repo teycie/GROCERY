@@ -37,6 +37,9 @@
                     <h3 class="text-lg font-bold text-gray-900 dark:text-slate-100">{{ optional($delivery->product)->name }}</h3>
                     <p class="text-sm text-gray-600 dark:text-slate-400 mt-1">Quantity: <span class="font-semibold text-gray-800 dark:text-slate-200">{{ $delivery->quantity }}</span></p>
                     <p class="text-sm text-gray-600 dark:text-slate-400 mt-1">Payment: <span class="font-semibold uppercase text-gray-800 dark:text-slate-200">{{ $delivery->payment_mode ?? '-' }}</span></p>
+                    @if(strtolower($delivery->payment_mode) === 'cod' || strtolower($delivery->payment_mode) === 'cash on delivery')
+                        <p class="text-sm font-bold text-red-600 dark:text-red-400 mt-1">Amount to Collect: <span class="font-extrabold text-lg">₱{{ number_format(optional($delivery->product)->price * $delivery->quantity, 2) }}</span></p>
+                    @endif
                 </div>
             </div>
         </div>
@@ -50,7 +53,6 @@
                     Pickup (Seller)
                 </h2>
                 <div class="space-y-3">
-                    <p class="text-sm"><span class="font-semibold text-gray-600 dark:text-slate-400">Name:</span> <span class="text-gray-900 dark:text-slate-100">{{ optional($delivery->seller)->name }}</span></p>
                     <p class="text-sm"><span class="font-semibold text-gray-600 dark:text-slate-400">Phone:</span> <span class="text-gray-900 dark:text-slate-100">{{ optional($delivery->seller)->phone ?? 'Not provided' }}</span></p>
                     <p class="text-sm"><span class="font-semibold text-gray-600 dark:text-slate-400">Email:</span> <span class="text-gray-900 dark:text-slate-100">{{ optional($delivery->seller)->email }}</span></p>
                 </div>
