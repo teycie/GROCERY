@@ -49,14 +49,15 @@
                         break;
                     case 'shipped':
                     case 'ready':
+                    case 'picked_up':
                         $statusClass = 'bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300';
                         break;
                     case 'out_for_delivery':
                     case 'ready_to_pickup':
+                    case 'on_delivery':
                         $statusClass = 'bg-purple-100 text-purple-800 dark:bg-purple-900/40 dark:text-purple-300';
                         break;
                     case 'delivered':
-                    case 'picked_up':
                         $statusClass = 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300';
                         break;
                     case 'cancelled':
@@ -68,7 +69,7 @@
                 $isPickup = $delivery->fulfillment_type === 'pickup';
                 $statusLabels = $isPickup
                     ? ['pending' => 'Pending', 'approved' => 'Approved', 'preparing' => 'Preparing', 'ready' => 'Ready', 'ready_to_pickup' => 'Ready to Pick-up', 'picked_up' => 'Picked Up']
-                    : ['pending' => 'Pending', 'approved' => 'Approved', 'processing' => 'Processing', 'shipped' => 'Shipped', 'out_for_delivery' => 'Out for Delivery', 'delivered' => 'Delivered'];
+                    : ['pending' => 'Pending', 'approved' => 'Approved', 'processing' => 'Processing', 'shipped' => 'Shipped', 'rider_assigned' => 'Rider Assigned', 'picked_up' => 'Picked Up', 'on_delivery' => 'On Delivery', 'out_for_delivery' => 'Out for Delivery', 'delivered' => 'Delivered'];
                 $statusOptions = $isPickup
                     ? ['pending' => 'Pending', 'approved' => 'Approve Order', 'preparing' => 'Preparing', 'ready' => 'Ready', 'ready_to_pickup' => 'Ready to Pick-up', 'picked_up' => 'Picked Up', 'cancelled' => 'Cancelled']
                     : ['pending' => 'Pending', 'approved' => 'Approve Order', 'processing' => 'Processing', 'shipped' => 'Shipped', 'out_for_delivery' => 'Out for Delivery', 'delivered' => 'Delivered', 'cancelled' => 'Cancelled'];
@@ -123,8 +124,17 @@
 
                             <label class="block text-xs font-semibold uppercase tracking-wide text-gray-600 dark:text-slate-300 mb-2">Update Status</label>
                             <div class="flex flex-wrap gap-2">
+                                @php
+                                    // Map rider tracking statuses to seller status options
+                                    $statusMapping = [
+                                        'picked_up' => 'shipped',
+                                        'on_delivery' => 'out_for_delivery',
+                                        'rider_assigned' => 'shipped',
+                                    ];
+                                    $matchStatus = $statusMapping[$currentStatus] ?? $currentStatus;
+                                @endphp
                                 @foreach($statusOptions as $value => $label)
-                                    <button type="submit" name="status" value="{{ $value }}" class="rounded-lg px-3 py-1.5 text-sm font-semibold transition {{ $currentStatus === $value ? 'bg-green-600 text-white ring-2 ring-green-600 ring-offset-2 dark:ring-offset-slate-900' : 'bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700' }}">
+                                    <button type="submit" name="status" value="{{ $value }}" class="rounded-lg px-3 py-1.5 text-sm font-semibold transition {{ $matchStatus === $value ? 'bg-green-600 text-white ring-2 ring-green-600 ring-offset-2 dark:ring-offset-slate-900' : 'bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700' }}">
                                         {{ $label }}
                                     </button>
                                 @endforeach

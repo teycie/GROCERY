@@ -21,8 +21,8 @@ A simple and clean beginner-friendly Laravel web application with:
 
 ## Important Note About Version
 
-This project attempted to install latest Laravel, but the local PHP version could not satisfy Laravel 13 requirement (`php ^8.3`).
-So Composer installed Laravel 8 (stable and compatible with your environment).
+This project is intentionally kept on Laravel 8 so it can run on PHP 7.4+.
+Composer is configured for PHP compatibility (`php ^7.4|^8.0`) so local setup does not require PHP 8.1+.
 
 If you upgrade PHP to 8.3+, you can create a Laravel 13 project directly.
 
