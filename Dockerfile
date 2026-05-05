@@ -1,6 +1,9 @@
 FROM node:16 AS node-builder
 WORKDIR /app
 
+# Ensure public asset dirs exist so final stage COPY won't fail
+RUN mkdir -p public/js public/css
+
 # Copy JS/CSS build files
 COPY package*.json webpack.mix.js ./
 COPY resources resources
