@@ -119,27 +119,27 @@
                 <div class="flex items-center space-x-6">
                     @auth
                         @if(auth()->user()->role === 'buyer')
-                            <a href="{{ route('buyer.dashboard') }}" class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-semibold transition">Home</a>
-                            <a href="{{ route('products.index') }}" class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-semibold transition">Shop</a>
-                            <a href="{{ route('cart.index') }}" class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-semibold transition relative" title="Cart">
+                            <a href="{{ route('buyer.dashboard') }}" class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-semibold transition {{ request()->routeIs('buyer.dashboard') ? 'text-green-600 dark:text-green-400' : '' }}" {{ request()->routeIs('buyer.dashboard') ? 'aria-current=\"page\"' : '' }}>Home</a>
+                            <a href="{{ route('products.index') }}" class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-semibold transition {{ request()->routeIs('products.*') ? 'text-green-600 dark:text-green-400' : '' }}" {{ request()->routeIs('products.*') ? 'aria-current=\"page\"' : '' }}>Shop</a>
+                            <a href="{{ route('cart.index') }}" class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-semibold transition relative {{ request()->routeIs('cart.*') ? 'text-green-600 dark:text-green-400' : '' }}" title="Cart" {{ request()->routeIs('cart.*') ? 'aria-current=\"page\"' : '' }}>
                                 <svg class="h-6 w-6 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                                 </svg>
                             </a>
                         @elseif(auth()->user()->role === 'seller' || auth()->user()->role === 'admin')
-                            <a href="{{ route('seller.dashboard') }}" class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-semibold transition">Dashboard</a>
-                            <a href="{{ route('seller.products.index') }}" class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-semibold transition">Products</a>
-                            <a href="{{ route('seller.inventory.index') }}" class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-semibold transition">Inventory</a>
-                            <a href="{{ route('seller.deliveries.index') }}" class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-semibold transition">Order</a>
-                            <a href="{{ route('seller.announcements.create') }}" class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-semibold transition" title="Post Announcement">
+                            <a href="{{ route('seller.dashboard') }}" class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-semibold transition {{ request()->routeIs('seller.dashboard') ? 'text-green-600 dark:text-green-400' : '' }}" {{ request()->routeIs('seller.dashboard') ? 'aria-current=\"page\"' : '' }}>Dashboard</a>
+                            <a href="{{ route('seller.products.index') }}" class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-semibold transition {{ request()->routeIs('seller.products.*') ? 'text-green-600 dark:text-green-400' : '' }}" {{ request()->routeIs('seller.products.*') ? 'aria-current=\"page\"' : '' }}>Products</a>
+                            <a href="{{ route('seller.inventory.index') }}" class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-semibold transition {{ request()->routeIs('seller.inventory.*') ? 'text-green-600 dark:text-green-400' : '' }}" {{ request()->routeIs('seller.inventory.*') ? 'aria-current=\"page\"' : '' }}>Inventory</a>
+                            <a href="{{ route('seller.deliveries.index') }}" class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-semibold transition {{ request()->routeIs('seller.deliveries.*') ? 'text-green-600 dark:text-green-400' : '' }}" {{ request()->routeIs('seller.deliveries.*') ? 'aria-current=\"page\"' : '' }}>Order</a>
+                            <a href="{{ route('seller.announcements.create') }}" class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-semibold transition {{ request()->routeIs('seller.announcements.*') ? 'text-green-600 dark:text-green-400' : '' }}" title="Post Announcement" {{ request()->routeIs('seller.announcements.*') ? 'aria-current=\"page\"' : '' }}>
                                 <svg class="h-6 w-6 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
                                 </svg>
                             </a>
                         @elseif(auth()->user()->role === 'rider')
-                            <a href="{{ route('rider.dashboard') }}" class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-semibold transition">Dashboard</a>
-                            <a href="{{ route('rider.deliveries', ['filter' => 'active']) }}" class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-semibold transition">My Deliveries</a>
-                            <a href="{{ route('rider.deliveries', ['filter' => 'history']) }}" class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-semibold transition">History</a>
+                            <a href="{{ route('rider.dashboard') }}" class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-semibold transition {{ request()->routeIs('rider.dashboard') ? 'text-green-600 dark:text-green-400' : '' }}" {{ request()->routeIs('rider.dashboard') ? 'aria-current=\"page\"' : '' }}>Dashboard</a>
+                            <a href="{{ route('rider.deliveries', ['filter' => 'active']) }}" class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-semibold transition {{ request()->routeIs('rider.deliveries') && request()->input('filter') !== 'history' ? 'text-green-600 dark:text-green-400' : '' }}" {{ request()->routeIs('rider.deliveries') && request()->input('filter') !== 'history' ? 'aria-current=\"page\"' : '' }}>My Deliveries</a>
+                            <a href="{{ route('rider.deliveries', ['filter' => 'history']) }}" class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-semibold transition {{ request()->routeIs('rider.deliveries') && request()->input('filter') === 'history' ? 'text-green-600 dark:text-green-400' : '' }}" {{ request()->routeIs('rider.deliveries') && request()->input('filter') === 'history' ? 'aria-current=\"page\"' : '' }}>History</a>
                         @else
                             <a href="{{ route('dashboard') }}" class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-semibold transition">Dashboard</a>
                         @endif
@@ -163,7 +163,7 @@
                             </div>
                         </div>
 
-                        <a href="{{ route('profile.show') }}" class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-semibold transition" title="Profile">
+                        <a href="{{ route('profile.show') }}" class="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-semibold transition {{ request()->routeIs('profile.*') ? 'text-green-600 dark:text-green-400' : '' }}" title="Profile" {{ request()->routeIs('profile.*') ? 'aria-current="page"' : '' }}>
                             <svg class="h-6 w-6 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                             </svg>

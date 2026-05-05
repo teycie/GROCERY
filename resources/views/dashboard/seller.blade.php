@@ -45,13 +45,6 @@
     </div>
 </div>
 
-<!-- Chart Section -->
-<div class="bg-white dark:bg-[#0f1726] rounded-xl shadow-sm border border-gray-100 dark:border-slate-800 p-6 mb-8 transition-colors duration-200">
-    <h2 class="text-xl font-bold text-gray-800 dark:text-slate-100 mb-6 border-b border-gray-100 dark:border-slate-800 pb-4">Products by Category</h2>
-    <div class="relative h-72 w-full">
-        <canvas id="categoryChart"></canvas>
-    </div>
-</div>
 
 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
     

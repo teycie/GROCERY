@@ -7,12 +7,26 @@ use Illuminate\Support\Facades\Auth;
 
 class InventoryController extends Controller
 {
-    public function index()
+    private $categories = [
+        'Frozen',
+        'Beverage',
+        'Snacks',
+        'Fruits & Vegetables',
+        'Pet Care',
+        'Household Cleaning & Essentials',
+    ];
+
+    public function index(\Illuminate\Http\Request $request)
     {
         $productsQuery = Product::whereHas('user', function ($query) {
                 $query->whereIn('role', ['seller', 'admin']);
             })
             ->with(['images', 'user']);
+
+        // Apply category filter if provided
+        if ($request->filled('category')) {
+            $productsQuery->where('category', $request->category);
+        }
 
         $products = (clone $productsQuery)
             ->orderBy('created_at', 'desc')
@@ -30,12 +44,16 @@ class InventoryController extends Controller
         $totalInventoryValue = (clone $productsQuery)
             ->sum(\Illuminate\Support\Facades\DB::raw('stock * price'));
 
+        $selectedCategory = $request->category;
+
         return view('seller.inventory.index', compact(
             'products',
             'totalProducts',
             'lowStockProducts',
             'outOfStockProducts',
-            'totalInventoryValue'
+            'totalInventoryValue',
+            'categories',
+            'selectedCategory'
         ));
     }
 }

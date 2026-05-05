@@ -32,7 +32,61 @@
     </div>
 </div>
 
-<div class="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900">
+<div class="flex flex-col lg:flex-row gap-4">
+    <div class="w-full lg:w-[22%]">
+        <div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-gray-100 dark:border-slate-800 p-5 sticky top-24">
+            <h2 class="text-lg font-bold text-gray-800 dark:text-slate-100 mb-4 border-b border-gray-200 dark:border-slate-800 pb-2">Categories</h2>
+
+            @php
+                $categoryIcons = [
+                    'Frozen' => 'frozen',
+                    'Beverage' => 'beverage',
+                    'Snacks' => 'snacks',
+                    'Fruits & Vegetables' => 'produce',
+                    'Pet Care' => 'pet',
+                    'Household Cleaning & Essentials' => 'household',
+                ];
+
+                $renderCategoryIcon = function ($icon) {
+                    switch ($icon) {
+                        case 'all':
+                            return '<svg class="w-4 h-4 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>';
+                        case 'frozen':
+                            return '<svg class="w-4 h-4 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2v20m0-20l3 3m-3-3L9 5m3 17l3-3m-3 3l-3-3M2 12h20m-20 0l3-3m-3 3l3 3m17-3l-3-3m3 3l-3 3" /></svg>';
+                        case 'beverage':
+                            return '<svg class="w-4 h-4 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 4h8l-1 14a2 2 0 01-2 2h-2a2 2 0 01-2-2L8 4zm0 0V2h8v2" /></svg>';
+                        case 'snacks':
+                            return '<svg class="w-4 h-4 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4h10l2 5-2 11H7L5 9l2-5z" /></svg>';
+                        case 'produce':
+                            return '<svg class="w-4 h-4 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 21c4.418 0 8-3.582 8-8 0-5-4-9-8-9s-8 4-8 9c0 4.418 3.582 8 8 8zm0-17c.5-1.5 1.5-2.5 3-3" /></svg>';
+                        case 'pet':
+                            return '<svg class="w-4 h-4 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11a2 2 0 100-4 2 2 0 000 4zm10 0a2 2 0 100-4 2 2 0 000 4zM5 9a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm14 0a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM12 20c3 0 6-1.5 6-4 0-2-1.5-3.5-3.5-3.5-.9 0-1.8.3-2.5.9a3.7 3.7 0 00-2.5-.9C7.5 12.5 6 14 6 16c0 2.5 3 4 6 4z" /></svg>';
+                        case 'household':
+                            return '<svg class="w-4 h-4 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 11l9-8 9 8M5 10v10h14V10" /></svg>';
+                        default:
+                            return '<svg class="w-4 h-4 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8h.01M12 12v4m9-4a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>';
+                    }
+                };
+            @endphp
+
+            <div class="space-y-2">
+                <a href="{{ route('seller.inventory.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition {{ !request('category') ? 'bg-green-50 dark:bg-green-500/15 text-green-700 dark:text-green-300 font-medium' : 'text-gray-600 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-slate-800' }}">
+                    <span>{!! $renderCategoryIcon('all') !!}</span>
+                    <span>All Products</span>
+                </a>
+
+                @foreach($categories as $category)
+                    <a href="{{ route('seller.inventory.index', ['category' => $category]) }}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition {{ ($selectedCategory ?? '') === $category ? 'bg-green-50 dark:bg-green-500/15 text-green-700 dark:text-green-300 font-medium' : 'text-gray-600 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-slate-800' }}">
+                        <span>{!! $renderCategoryIcon($categoryIcons[$category] ?? null) !!}</span>
+                        <span>{{ $category }}</span>
+                    </a>
+                @endforeach
+            </div>
+        </div>
+    </div>
+
+    <div class="w-full lg:w-[78%]">
+        <div class="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900">
     <div class="border-b border-gray-100 px-6 py-4 dark:border-slate-700">
         <h2 class="text-xl font-bold text-gray-800 dark:text-slate-100">Stock Overview</h2>
     </div>
@@ -41,11 +95,10 @@
         <table class="min-w-full divide-y divide-gray-200 dark:divide-slate-700">
             <thead class="bg-gray-50 dark:bg-slate-800/70">
                 <tr>
-                    <th class="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-slate-300">Product</th>
-                    <th class="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-slate-300">Posted By</th>
-                    <th class="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-slate-300">Category</th>
-                    <th class="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-slate-300">Stock</th>
-                    <th class="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-slate-300">Value</th>
+                    <th class="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-slate-300 w-2/5">Product</th>
+                    <th class="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-slate-300 w-1/5">Category</th>
+                    <th class="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-slate-300 w-1/5">Stock</th>
+                    <th class="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-slate-300 w-1/5">Value</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-100 bg-white dark:divide-slate-800 dark:bg-slate-900">
@@ -73,7 +126,6 @@
                                 </div>
                             </div>
                         </td>
-                        <td class="px-6 py-5 text-sm text-gray-600 dark:text-slate-300">{{ $product->user->name ?? 'Unknown Seller' }}</td>
                         <td class="px-6 py-5 text-sm text-gray-600 dark:text-slate-300">{{ $product->category }}</td>
                         <td class="px-6 py-5">
                             <div class="space-y-2">
@@ -90,7 +142,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="5" class="px-6 py-16 text-center text-gray-500 dark:text-slate-300">
+                        <td colspan="4" class="px-6 py-16 text-center text-gray-500 dark:text-slate-300">
                             <p class="text-lg font-semibold text-gray-800 dark:text-slate-100">No products found</p>
                             <p class="mt-1">Add products first so inventory can be tracked here.</p>
                         </td>
@@ -105,5 +157,6 @@
             {{ $products->links() }}
         </div>
     @endif
+    </div>
 </div>
 @endsection
