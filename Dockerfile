@@ -20,6 +20,9 @@ RUN apt-get update && apt-get install -y \
 # Enable Apache rewrite module
 RUN a2enmod rewrite
 
+# Disable other MPMs to avoid conflicts (keep only mpm_prefork)
+RUN a2dismod mpm_event mpm_worker || true
+
 # Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
