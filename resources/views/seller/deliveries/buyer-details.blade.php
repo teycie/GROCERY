@@ -139,10 +139,13 @@
                                         <div>
                                             <p class="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-slate-400">Assigned Rider</p>
                                             <p class="text-sm font-bold text-gray-900 dark:text-slate-100">{{ optional($delivery->rider)->name }}</p>
+                                            <p class="mt-1 text-xs font-medium {{ optional($delivery->rider)->is_rider_available ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400' }}">
+                                                {{ optional($delivery->rider)->is_rider_available ? 'Available' : 'Busy' }}
+                                            </p>
                                         </div>
                                         <div class="text-right">
-                                            <span class="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium bg-indigo-100 text-indigo-800 dark:bg-indigo-900/40 dark:text-indigo-300">
-                                                Assigned
+                                            <span class="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium {{ optional($delivery->rider)->is_rider_available ? 'bg-indigo-100 text-indigo-800 dark:bg-indigo-900/40 dark:text-indigo-300' : 'bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-300' }}">
+                                                {{ optional($delivery->rider)->is_rider_available ? 'Assigned' : 'Busy' }}
                                             </span>
                                         </div>
                                     </div>
@@ -157,9 +160,12 @@
                                                     <option value="{{ $availableRider->id }}">{{ $availableRider->name }}</option>
                                                 @endforeach
                                             </select>
+                                            @if($availableRiders->isEmpty())
+                                                <p class="mt-2 text-xs font-medium text-red-600 dark:text-red-400">No riders are currently available.</p>
+                                            @endif
                                         </div>
                                         <div class="md:col-span-1 flex items-end">
-                                            <button type="submit" class="w-full rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 px-4 transition">Assign</button>
+                                            <button type="submit" class="w-full rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 px-4 transition {{ $availableRiders->isEmpty() ? 'opacity-50 cursor-not-allowed' : '' }}" {{ $availableRiders->isEmpty() ? 'disabled' : '' }}>Assign</button>
                                         </div>
                                     </form>
                                 @endif

@@ -100,8 +100,11 @@ class DeliveryController extends Controller
         $totalProducts = Delivery::where('user_id', $buyer->id)
             ->sum('quantity');
 
-        // Available riders for assignment
-        $availableRiders = User::where('role', 'rider')->get();
+        // Only riders who are currently marked available can be assigned.
+        $availableRiders = User::where('role', 'rider')
+            ->where('is_rider_available', true)
+            ->orderBy('name')
+            ->get();
 
         return view('seller.deliveries.buyer-details', compact(
             'buyer',
@@ -122,12 +125,24 @@ class DeliveryController extends Controller
         }
 
         $validated = $request->validate([
-            'rider_id' => ['required', 'exists:users,id'],
+            'rider_id' => [
+                'required',
+                Rule::exists('users', 'id')->where(function ($query) {
+                    $query->where('role', 'rider')
+                        ->where('is_rider_available', true);
+                }),
+            ],
         ]);
 
         $rider = User::where('id', $validated['rider_id'])
             ->where('role', 'rider')
             ->firstOrFail();
+
+        if (!$rider->is_rider_available) {
+            return back()->withErrors([
+                'rider_id' => 'This rider is currently busy and cannot be assigned.',
+            ]);
+        }
 
         // Update delivery with rider info
         $delivery->update([
